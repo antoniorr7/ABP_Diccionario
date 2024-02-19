@@ -23,6 +23,24 @@ class Clase extends Conexion {
             return $clases;
         }
     }
+    public function listarClase($id) {
+        $query = "SELECT nombreClase FROM clase where id = $id";
+        $resultado = $this->conexion->query($query); 
+       
+        if ($resultado === false) {
+            return 'Error al consultar la base de datos';
+        } else {
+            if ($resultado->num_rows === 0) {
+                return null;
+                
+            } else {
+                foreach ($resultado as $fila) {
+                    $clases[] = $fila;
+                }
+            }
+            return $clases;
+        }
+    }
 
     public function aniadir () {
         
@@ -69,10 +87,10 @@ class Clase extends Conexion {
         // Preparar la consulta con parámetros
         $query = "UPDATE clase SET nombreClase = ? WHERE id = ?";
         $stmt = $this->conexion->prepare($query);
-    
+
         // Vincular parámetros
         $stmt->bind_param("si", $nombre, $id);
-    
+
         // Ejecutar la consulta
         $stmt->execute();
     

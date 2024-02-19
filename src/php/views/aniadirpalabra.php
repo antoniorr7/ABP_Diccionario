@@ -2,7 +2,7 @@
   <h2>Introduce el Nombre de la palabra</h2>
   <form action="index.php?action=aniadirPalabra&controller=palabra" method="post" enctype="multipart/form-data">
     <input type="hidden" name="idClase" value="<?php echo ($_GET['idClase']); ?>">
-    <input type="hidden" name="nombreClase" value="<?php echo ($_GET['nombreClase']); ?>">
+
     <label for="nombrePalabra">Nombre de la palabra:</label>
     <input type="text" id="nombrePalabra" name="palabra" required>
     <br>

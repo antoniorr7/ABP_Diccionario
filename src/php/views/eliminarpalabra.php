@@ -8,8 +8,6 @@
 <div id="confirmacionBorrado">
 <form id="confirmacionForm" action="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>" method="POST">
         <p>¿Estás seguro de que deseas borrar esta palabra?</p>
-        <input type="hidden" name="nombreClase" value="<?php echo $_GET['nombreClase']; ?>">
-    <input type="hidden" name="idClase" value="<?php echo $_GET['idClase']; ?>">
         <label for="confirmarSi">Sí</label>
         <input type="radio" id="confirmarSi" name="confirmarBorrado" value="si">
         <label for="confirmarNo">No</label>

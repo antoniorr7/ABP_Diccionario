@@ -16,9 +16,9 @@
           echo '<tr>';
           echo '<td>' . $elemento['nombreClase'] . '</td>';
           echo '<td class="actions">';
-          echo '<a class="edit" href="index.php?action=editarClases&controller=clase&id=' . $elemento['id'] .'&nombreClase='. $elemento['nombreClase'] . '">Editar</a>';
+          echo '<a class="edit" href="index.php?action=obtenerEditar&controller=clase&id=' . $elemento['id'] .'">Editar</a>';
           echo '<a class="delete" href="index.php?action=eliminarClase&controller=clase&id=' . $elemento['id'] . '">Borrar</a>';
-          echo '<a class="edit" href="index.php?action=listarPalabras&controller=palabra&idClase=' . $elemento['id'] .'&nombreClase=' .$elemento['nombreClase'] . '">palabra</a>';
+          echo '<a class="edit" href="index.php?action=listarPalabras&controller=palabra&idClase=' . $elemento['id'] .'">palabra</a>';
 
           echo '</td>';
           

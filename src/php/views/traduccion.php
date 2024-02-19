@@ -1,8 +1,7 @@
 <?php
 
-
 if ($retornado === null) {
-    echo "No se encontraron traducciones para  ".$_GET['palabra'] ;
+    echo "No se encontraron traducciones para  ".$retornado ;
 } else {
     echo "<h2>" . $_GET['palabra'] . "</h2>"; // Título de la traducción
     foreach ($retornado as $traduccion) {
@@ -20,6 +19,6 @@ if ($retornado === null) {
 }
    
 
-    echo '<a id="tran" class="btn-petit" href="index.php?controller=traduccion&action=aniadirTraduccion&idPalabra=' . $_GET['idPalabra'] . '&palabra=' . $_GET['palabra']. '">Añadir nueva traducción</a>';
+   // echo '<a id="tran" class="btn-petit" href="index.php?controller=traduccion&action=aniadirTraduccion&idPalabra=' . $_GET['idPalabra'] . '&palabra=' . $_GET['palabra']. '">Añadir nueva traducción</a>';
 
 ?>

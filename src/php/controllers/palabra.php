@@ -11,7 +11,6 @@ class Controladorpalabra{
     public function listarPalabras() {
         $this->view = 'palabra';
         return $this->objPalabra->listar($_GET['idClase']);
-
     }
 public function aniadirPalabra(){
     $this->view = 'aniadirPalabra';
@@ -31,34 +30,36 @@ public function aniadirPalabra(){
         if (!empty($palabra)) {
             // Llamar al método del modelo y pasar el idClase como argumento
             $this->objPalabra->aniadir($idClase, $palabra, $audio64);
-            header("Location: index.php?action=listarPalabras&controller=palabra&nombreClase=" . $_POST['nombreClase']. "&idClase=".$_POST['idClase']);
+            header("Location: index.php?action=listarPalabras&controller=palabra&idClase=".$_POST['idClase']);
         } 
     }
 }
 
     public function eliminarPalabra(){
         $this->view = 'eliminarpalabra';
-       
+        $idClase = $this->objPalabra->cogerDatosPalabra($_GET['idPalabra'])['idClase'];
             if (isset($_POST['confirmarBorrado']) && $_POST['confirmarBorrado'] === 'si') {
-             
+                    
                     $this->objPalabra->borrar($_GET['idPalabra']);
-                    header("Location: index.php?action=listarPalabras&controller=palabra&nombreClase=" . $_POST['nombreClase']. "&idClase=".$_POST['idClase']);
-
+                    header("Location: index.php?action=listarPalabras&controller=palabra&idClase=" . $idClase);
             }
             if (isset($_POST['confirmarBorrado']) && $_POST['confirmarBorrado'] === 'no') {
-                header("Location: index.php?action=listarPalabras&controller=palabra&nombreClase=" . $_POST['nombreClase']. "&idClase=".$_POST['idClase']);
+                header("Location: index.php?action=listarPalabras&controller=palabra&idClase=".$idClase);
             }
 
     }
-    public function editarPalabra(){
+    public function obtenerPalabra(){
         $this->view = 'editarpalabra';
-    
-        if (isset($_POST['idPalabra'], $_POST['nombreClase'], $_POST['palabra']) && !empty($_POST['palabra'])) {
+        return $this->objPalabra->cogerDatosPalabra($_GET['idPalabra']);
+    }
+    public function editarPalabra(){
+        
+        $this->view = 'palabra';
+      
+        if (isset($_POST['idPalabra'], $_POST['palabra']) && !empty($_POST['palabra'])) {
             $this->objPalabra->editar($_POST['idPalabra'], $_POST['palabra']);
-            // Descomentar la siguiente línea para redireccionar después de editar la palabra
-             header("Location: index.php?action=listarPalabras&controller=palabra&nombreClase=" . $_POST['nombreClase']. "&idClase=".$_POST['idClase']);
-        } else {
-            // Manejar el caso en que los datos necesarios no estén presentes o sean inválidos
+           
+            header("Location: index.php?action=listarPalabras&controller=palabra&idClase=" . $_POST['idClase']);
         }
     }
 }

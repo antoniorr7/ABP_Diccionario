@@ -16,6 +16,10 @@ class Controladorclase{
         $this->view = 'clase';
         return $this->objClases->listar(); 
     }
+    public function listarClase($id) {
+       
+        return $this->objClases->listarClase($id); 
+    }
     public function aniadirClases(){
         $this->view = 'aniadirclase';
         if (isset($_POST['nombreClase']) && !empty($_POST['nombreClase'])) {
@@ -39,14 +43,20 @@ class Controladorclase{
             }
 
     }
-    public function editarClases(){
+    
+    public function obtenerEditar(){
         $this->view = 'editarclase';
-        if (isset($_POST['nombreClase']) && !empty($_POST['nombreClase'])) {
-
+        return $clase =  ($this->listarClase($_GET['id']));
+    }
+    public function editarClases(){
+        $this->view = 'clase';
+        
+       
+            
             $this->objClases->editar($_POST['id'],$_POST['nombreClase']);
 
             header('Location: index.php?action=listarClases&controller=clase');
         }
-    }
+    
 }
 ?>
