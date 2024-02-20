@@ -7,5 +7,5 @@
     <br>
     <input type="submit" value="Enviar" class="btn">
   </form>
-    <a  href="index.php?action=aniadirPalabra&controller=palabra"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
+    <a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>

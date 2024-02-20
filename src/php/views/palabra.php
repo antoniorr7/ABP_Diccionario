@@ -1,52 +1,41 @@
-<div id="tabla-container">
-  <table>
-    <thead>
-      <tr>
-      <?php
-if ($retornado == null) {
-  // Código cuando $retornado es null
-} else {
-  foreach ($retornado as $dato) {
-    $nombreClase = $dato['nombreClase'];
-  }
-?>
-  <th><?php echo $nombreClase ?></th>
-<?php
-}
-?>
+<h1>Nombre de la clase</h1>
 
-       
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-      if ($retornado  == null){
-        echo '<tr><td>No hay palabras registradas</td></tr>';
-      }
-      else{
-        foreach ($retornado as $elemento) {
-          echo '<tr>';
-          echo '<td>' . $elemento['palabra'] . '</td>';
-          echo '<td class="actions">';
-          echo '<div class="actions-container">';
-          echo '<a class="edit" href="index.php?action=obtenerPalabra&controller=palabra&idClase=&idPalabra='.$elemento['idPalabra'].'">Editar</a>';
-          echo '<a class="delete" href="index.php?action=eliminarPalabra&controller=palabra&idPalabra='.$elemento['idPalabra'].'">Borrar</a>';
-          echo '<a class="edit" href="index.php?action=listarTraduccion&controller=traduccion&idPalabra='.$elemento['idPalabra'].'">Traducciones</a>';
-          if (!empty($elemento['audio'])) {
-              echo '<audio id="miAudio" controls>';
-              echo '<source src="data:audio/mpeg;base64,' . $elemento['audio'] . '" type="audio/mpeg">';
-              echo '</audio>';
-          }
-          echo '</div>'; 
-          echo '</td>';
-          echo '</tr>';
-        }
-      }
+<div class="panel-administracion">
+    <?php 
+    // Array para llevar un registro de las palabras mostradas
+    $palabras_mostradas = array(); 
+
+    // Iterar sobre el arreglo retornado
+    foreach ($retornado as $palabra): 
+        // Verificar si la palabra ya ha sido mostrada
+        if (!in_array($palabra['palabra'], $palabras_mostradas)) { 
+            // Agregar la palabra al array de palabras mostradas
+            $palabras_mostradas[] = $palabra['palabra']; 
     ?>
-    </tbody>
-  </table>
+    <!-- Div para mostrar la palabra y sus significados -->
+    <div class="clase">
+        <h2><?php echo $palabra['palabra']; ?></h2>
+        <ul>
+            <?php 
+            // Iterar nuevamente para mostrar todos los significados de la palabra actual
+            foreach ($retornado as $datos): 
+                // Verificar si el dato actual corresponde a la palabra actual
+                if ($datos['palabra'] === $palabra['palabra']): 
+                    if($datos['significados'] === NULL){
+                        echo "<li>No hay significados</li>";
+                    }else{
+                        echo "<li>".$datos['significados']."</li>";
+                    }
+                endif;
+                endforeach; 
+            ?> 
+        </ul>
+    </div>
+    <?php
+        }
+    endforeach; 
+    ?>
 </div>
-<div  id='aniadirclase'>
-  <a href='index.php?action=aniadirPalabra&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>'>Agregar palabras</a>
-</div>
+
+<!-- Enlace para añadir una nueva palabra -->
+<a href="#" id="btnAgregarPalabra">Añadir Palabra</a>

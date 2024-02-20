@@ -212,12 +212,6 @@ thead th {
   background-color: #c82333;
 }
 
-#miAudio {
-  width: 50px;
-  height: auto;
-
-
-}
 
 /***************************************/
 
@@ -314,30 +308,58 @@ input[type="submit"]:hover {
 
 /************************************************/
 /* Palabras */
-
-
-.word-container {
-  max-width: 800px;
-  margin: 50px auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.meanings {
+.panel-administracion {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.panel-administracion h1 {
+  text-align: center;
+}
+
+.clase {
   margin-top: 20px;
 }
 
-.meaning {
-  margin-bottom: 20px;
+.clase h2 {
+  font-size: 20px;
 }
 
-.meaning h2 {
-  margin-bottom: 5px;
-  color: #333;
+.clase ul {
+  list-style-type: none;
+  padding: 0;
 }
 
-.meaning p {
-  color: #666;
+.clase ul li {
+  margin-bottom: 10px;
+}
+
+.clase ul li::before {
+  content: "• ";
+  color: #007bff; /* Cambia el color del bullet según desees */
+  font-weight: bold;
+}
+#btnAgregarPalabra {
+  display: block;
+  margin: 20px auto; /* Ajusta el margen superior e inferior según sea necesario */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none; /* Para quitar el subrayado predeterminado en los enlaces */
+  width: 10%;
+}
+
+#btnAgregarPalabra:hover {
+  background-color: #0056b3; /* Cambia el color al pasar el ratón sobre el enlace */
 }
