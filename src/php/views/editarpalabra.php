@@ -1,3 +1,4 @@
+
 <form id="traductor-form" method="post" action="index.php?action=editarPalabra&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>">
   <?php foreach ($retornado as $index => $data): ?>
     <?php if ($index === 0): ?>
@@ -7,13 +8,16 @@
         <input type="text" id="palabra" name="palabra" value="<?php echo $data['palabra']; ?>">
       </div>
     <?php endif; ?>
+
     <div class="input-container" id="traducciones-container">
     <input type="hidden" name="idTraduccion[]" value="<?php echo $data['idTraduccion']; ?>">
       <label for="traduccion">Traducción:</label>
       <input type="text" id="traduccion" name="traduccion[]" value="<?php echo $data['significados']; ?>">
+      <a href="index.php?action=eliminarTraduccion&controller=palabra&idTraduccion=<?php echo $data['idTraduccion']; ?>&idPalabra=<?php echo $data['idPalabra']; ?>">eliminar</a>
     </div>
   <?php endforeach; ?>
   <input type="submit" id="editar" value="Traducir">
+  <a href="index.php?action=aniadirTraduccion&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>">añadir Traduccion</a>
 </form>
 
-
+<?php print("<pre>".print_r($retornado,true)."</pre>");?>

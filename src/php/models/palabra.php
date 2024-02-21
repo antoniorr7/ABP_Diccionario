@@ -95,6 +95,19 @@ public function editarPalabra($datos){
     
     $stmt->close();
 }
-
+public function eliminarTraduccion($idTraduccion){
+    $query = "DELETE FROM traducciones WHERE idTraduccion = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bind_param("i", $idTraduccion);
+    $stmt->execute();
+    $stmt->close();
+}
+public function aniadirTraduccion($idPalabra){
+    $query = "INSERT INTO traducciones (significados, idPalabra) VALUES (' ', ?)";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bind_param("i", $idPalabra);
+    $stmt->execute();
+    $stmt->close();
+}
 }
 ?>
