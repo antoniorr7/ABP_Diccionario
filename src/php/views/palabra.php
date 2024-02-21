@@ -26,7 +26,7 @@ if (empty($retornado)) {
                 <div class="clase">
                 <h2>
                     <?php echo $palabra['palabra']; ?>
-                    <a href="index.php?action=aniadirPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEditarPalabra">e </a>
+                    <a href="index.php?action=rellenarEditar&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEditarPalabra">e </a>
                     <a href="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEliminarPalabra">x </a>
                 </h2>
                     <ul>

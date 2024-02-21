@@ -39,6 +39,18 @@ class Controladorpalabra{
             }
 
     }
-}
+    public function rellenarEditar(){
+        $this->view = 'editarpalabra';
+        
+      
+        return $this->objPalabra->obtenerPalabra($_GET['idPalabra']);
+
+    }
+    public function editarPalabra(){
+        $idClase=$this->objPalabra->obtenerIdClase($_GET['idPalabra']);
+        $this->objPalabra->editarPalabra($_POST);
+        header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
+    }
+    }
 
 ?>

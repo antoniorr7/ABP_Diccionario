@@ -65,6 +65,36 @@ class Palabra extends Conexion {
     $stmt->close();
 
     }
+ public function obtenerPalabra($idPalabra){
+    $query = "SELECT p.idPalabra,p.palabra, t.idTraduccion, t.significados
+    FROM palabras p
+    JOIN traducciones t ON p.idPalabra = t.idPalabra
+    WHERE p.idPalabra = ".$idPalabra;
+
+$resultado = $this->conexion->query($query);
+while ($fila = $resultado->fetch_assoc()) {
+    $palabra[] = $fila; // Añadimos cada fila al array $palabra
+}
+return $palabra; 
+}
+public function editarPalabra($datos){
+    $query = "UPDATE palabras SET palabra = ? WHERE idPalabra = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bind_param("si", $datos['palabra'], $datos['idPalabra']);
+    $stmt->execute();
+    $stmt->close();
+
+    $query = "UPDATE traducciones SET significados = ? WHERE idTraduccion = ?";
+    $stmt = $this->conexion->prepare($query);
+    
+    foreach ($datos['idTraduccion'] as $id => $idTraduccion) {
+        $significado = $datos['traduccion'][$id];
+        $stmt->bind_param("si", $significado, $idTraduccion);
+        $stmt->execute();
+    }
+    
+    $stmt->close();
+}
 
 }
 ?>

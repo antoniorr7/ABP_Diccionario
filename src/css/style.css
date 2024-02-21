@@ -359,7 +359,52 @@ label {
 #btnGuardarTraducciones {
     margin-top: 10px;
 }
+/*Editar*/
+#traductor-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
+#traductor-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#traductor-form .input-container {
+  margin-bottom: 15px;
+}
+
+#traductor-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+#traductor-form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+#traductor-form input[type="submit"] {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#traductor-form input[type="submit"]:hover {
+  background-color: #45a049;
+}
 
 /************************************************/
 /* Palabras */
