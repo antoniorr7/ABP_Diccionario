@@ -6,22 +6,45 @@ class Palabra extends Conexion {
         parent::__construct();
     }
     public function listarPalabras($idClase){
-
-        $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados
-                FROM palabras p
-                LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
-                where idClase= $idClase";
-        
+        $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase
+                  FROM palabras p
+                  LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
+                  LEFT JOIN clase c ON p.idClase = c.id
+                  WHERE p.idClase = $idClase";
+    
         $resultado = $this->conexion->query($query); 
-
-        
-      
+        $palabras = array(); // Inicializamos el arreglo de palabras
         while ($row = $resultado->fetch_assoc()) {
             $palabras[] = $row;
         }
         
-        return $palabras;
+        // Comprobar si el arreglo de palabras está vacío
+        if(empty($palabras)) {
+            return false; // Devolver false si no hay palabras
+        } else {
+            return $palabras; // Devolver el arreglo de palabras si hay palabras
+        }
     }
+    
+    public function aniadirDatos($datos) {
+        // Insertar la palabra
+        $query = "INSERT INTO palabras (idClase, palabra) VALUES ({$datos['idClase']}, '{$datos['palabra']}');";
+    
+        // Obtener el ID de la palabra insertada
+        $query .= "SET @idPalabra = LAST_INSERT_ID();";
+    
+        // Insertar las traducciones
+        for ($i = 1; $i <= $datos['numTraducciones']; $i++) {
+            $traduccion = $datos["traduccion".$i];
+            $query .= "INSERT INTO traducciones (significados, idPalabra) VALUES ('$traduccion', @idPalabra);";
+      
+        }
+    
+     
+        $this->conexion->multi_query($query);
+    }
+    
+    
     
 }
 ?>

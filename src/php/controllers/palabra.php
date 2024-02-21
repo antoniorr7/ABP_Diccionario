@@ -12,5 +12,17 @@ class Controladorpalabra{
         $this->view = 'palabra';
         return $this->objPalabra->listarPalabras($_GET['idClase']);
     }
+    public function aniadirPalabra(){
+        $this->view = 'aniadirpalabra';
+    }
+    public function aniadirTraducciones(){
+        $this->view = 'aniadirtraducciones';
+       // print("<pre>".print_r($_POST,true)."</pre>");
+    }
+    public function guardarPalabra(){
+        $this->objPalabra->aniadirDatos($_POST);
+        print("<pre>".print_r($_POST,true)."</pre>");
+        header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$_POST['idClase']);
+    }
 }
 ?>

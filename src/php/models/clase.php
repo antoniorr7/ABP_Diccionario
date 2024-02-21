@@ -106,6 +106,5 @@ class Clase extends Conexion {
         // Cerrar la sentencia preparada
         $stmt->close();
     }
-    
 }
 ?>
