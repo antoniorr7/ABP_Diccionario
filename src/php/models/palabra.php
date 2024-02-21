@@ -25,6 +25,18 @@ class Palabra extends Conexion {
             return $palabras; // Devolver el arreglo de palabras si hay palabras
         }
     }
+    public function obtenerIdClase($idPalabra) {
+        $query = "SELECT idClase FROM palabras WHERE idPalabra = ?";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("i", $idPalabra);
+        $stmt->execute();
+        $stmt->bind_result($idClase);
+        $stmt->fetch();
+        $stmt->close();
+    
+        return $idClase;
+    }
+    
     
     public function aniadirDatos($datos) {
         // Insertar la palabra
@@ -44,7 +56,15 @@ class Palabra extends Conexion {
         $this->conexion->multi_query($query);
     }
     
-    
-    
+    public function eliminarPalabra($idPalabra) {
+
+    $query = "DELETE FROM palabras WHERE idPalabra = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bind_param("i", $idPalabra);
+    $stmt->execute();
+    $stmt->close();
+
+    }
+
 }
 ?>

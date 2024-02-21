@@ -24,7 +24,11 @@ if (empty($retornado)) {
         ?>
                 <!-- Div para mostrar la palabra y sus significados -->
                 <div class="clase">
-                    <h2><?php echo $palabra['palabra']; ?></h2>
+                <h2>
+                    <?php echo $palabra['palabra']; ?>
+                    <a href="index.php?action=aniadirPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEditarPalabra">e </a>
+                    <a href="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEliminarPalabra">x </a>
+                </h2>
                     <ul>
                         <?php
                         // Iterar nuevamente para mostrar todos los significados de la palabra actual
@@ -46,6 +50,7 @@ if (empty($retornado)) {
         endforeach;
         ?>
     </div>
+    
 <?php } ?>
 
 <!-- Enlace para añadir una nueva palabra -->

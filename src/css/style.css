@@ -405,7 +405,7 @@ body {
 }
 #btnAgregarPalabra {
   display: block;
-  margin: 20px auto; /* Ajusta el margen superior e inferior según sea necesario */
+  margin: 20px auto; /* Ajusta el margen superior e inferior automáticamente */
   padding: 10px 20px;
   font-size: 16px;
   background-color: #007bff;
@@ -413,8 +413,49 @@ body {
   border-radius: 5px;
   text-decoration: none; /* Para quitar el subrayado predeterminado en los enlaces */
   width: 10%;
+  text-align: center;
 }
 
+
 #btnAgregarPalabra:hover {
-  background-color: #0056b3; /* Cambia el color al pasar el ratón sobre el enlace */
+  background-color: #0056b3; 
 }
+
+#btnEliminarPalabra,
+#btnEditarPalabra {
+  display: block;
+  padding: 1px;
+  font-size: 15px;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none; /* Para quitar el subrayado predeterminado en los enlaces */
+  width: 2%;
+  text-align: center;
+  float: right; /* Alinea los botones a la izquierda */
+  margin-left: 10px; /* Añade un margen izquierdo para separar los botones */
+}
+
+#btnEliminarPalabra {
+  background-color: #ff0000;
+}
+
+#btnEliminarPalabra:hover {
+  background-color: #980000; 
+}
+
+#btnEditarPalabra {
+  background-color: #007bff;
+}
+
+#btnEditarPalabra:hover {
+  background-color: #0056b3; 
+}
+
+.clase ul li{
+
+  background-color: #e8e6e693;
+
+  padding: 1%;
+  border-radius: 5px;
+  margin-top: 2%;
+} 
