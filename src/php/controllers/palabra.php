@@ -20,8 +20,10 @@ class Controladorpalabra{
        print("<pre>".print_r($_POST,true)."</pre>");
     }
     public function guardarPalabra(){
-        $this->objPalabra->aniadirDatos($_POST);
+        $this->view = ' ';
         print("<pre>".print_r($_POST,true)."</pre>");
+        $this->objPalabra->aniadirDatos($_POST);
+       
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$_POST['idClase']);
     }
  
@@ -63,4 +65,3 @@ class Controladorpalabra{
          header("Location: index.php?controller=palabra&action=rellenarEditar&idPalabra=".$_GET['idPalabra']);
     }
 }
-?>

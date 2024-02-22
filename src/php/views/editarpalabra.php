@@ -7,11 +7,12 @@
         <label for="palabra">Palabra:</label>
         <input type="text" id="palabra" name="palabra" value="<?php echo $data['palabra']; ?>">
       </div>
+      <label for="traduccion">Traducciónes:</label>
     <?php endif; ?>
 
     <div class="input-container" id="traducciones-container">
     <input type="hidden" name="idTraduccion[]" value="<?php echo $data['idTraduccion']; ?>">
-      <label for="traduccion">Traducción:</label>
+   
       <input type="text" id="traduccion" name="traduccion[]" value="<?php echo $data['significados']; ?>">
       <a href="index.php?action=eliminarTraduccion&controller=palabra&idTraduccion=<?php echo $data['idTraduccion']; ?>&idPalabra=<?php echo $data['idPalabra']; ?>">eliminar</a>
     </div>
