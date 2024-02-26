@@ -7,9 +7,26 @@
         <label for="palabra">Palabra:</label>
         <input type="text" id="palabra" name="palabra" value="<?php echo $data['palabra']; ?>">
       </div>
+      <label for="audio">Archivo de Audio:</label>
+      <?php
+        if(isset($data['audio']) && !empty($data['audio'])) {
+          $audio_decoded = base64_decode($data['audio']);
+          $audio_data_uri = 'data:audio/mpeg;base64,' . base64_encode($audio_decoded);
+          echo '<div class=audio-container>';
+          echo '<audio controls style="width: 100%;">
+
+                  <source src="' . $audio_data_uri . '" type="audio/mpeg">
+                </audio>
+                </div>';
+               
+      } 
+      echo '<input type="hidden" name="audio_data" value="' . $data['audio'] . '">';
+      ?>
+      
+    <input type="file" id="audio" name="audio" accept="audio/*" >
       <label for="traduccion">Traducciónes:</label>
     <?php endif; ?>
-
+   
     <div class="input-container" id="traducciones-container">
     <input type="hidden" name="idTraduccion[]" value="<?php echo $data['idTraduccion']; ?>">
    
@@ -22,3 +39,4 @@
 </form>
 
 <?php print("<pre>".print_r($retornado,true)."</pre>");?>
+

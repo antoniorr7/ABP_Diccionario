@@ -340,6 +340,7 @@ label {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+
 }
 
 /* Cambiar color de fondo del botón al pasar el mouse */
@@ -474,7 +475,7 @@ body {
   color: #fff;
   border-radius: 5px;
   text-decoration: none; /* Para quitar el subrayado predeterminado en los enlaces */
-  width: 2%;
+  width: 10%;
   text-align: center;
   float: right; /* Alinea los botones a la izquierda */
   margin-left: 10px; /* Añade un margen izquierdo para separar los botones */
@@ -504,3 +505,29 @@ body {
   border-radius: 5px;
   margin-top: 2%;
 } 
+.audio-container {
+
+  display: inline-block;
+
+  margin-left: 5%;
+
+
+}
+audio{
+  height: 20px;
+  width: 48px;
+}
+#palabra{
+  display: inline-block;
+  width: 50%;
+ 
+}
+h2{
+  display: flex;
+  justify-content: space-between;
+
+}
+.action{
+  display: inline-block;
+  width: 50%;
+}

@@ -6,7 +6,7 @@ class Palabra extends Conexion {
         parent::__construct();
     }
     public function listarPalabras($idClase){
-        $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase
+        $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase,p.audio
                   FROM palabras p
                   LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
                   LEFT JOIN clase c ON p.idClase = c.id
@@ -40,21 +40,24 @@ class Palabra extends Conexion {
     
     public function aniadirDatos($datos) {
         // Insertar la palabra
-        $query = "INSERT INTO palabras (idClase, palabra) VALUES ({$datos['idClase']}, '{$datos['palabra']}');";
-    
+        $palabra = $datos['palabra'];
+        $audio = $datos['audio'];
+        $idClase = $datos['idClase'];
+        
+        $query = "INSERT INTO palabras (idClase, palabra, audio) VALUES ('$idClase', '$palabra', '$audio');";
+        
         // Obtener el ID de la palabra insertada
         $query .= "SET @idPalabra = LAST_INSERT_ID();";
-    
+        
         // Insertar las traducciones
         for ($i = 1; $i <= $datos['numTraducciones']; $i++) {
             $traduccion = $datos["traduccion".$i];
             $query .= "INSERT INTO traducciones (significados, idPalabra) VALUES ('$traduccion', @idPalabra);";
-      
         }
-    
-     
+        
         $this->conexion->multi_query($query);
     }
+    
     
     public function eliminarPalabra($idPalabra) {
 
@@ -66,7 +69,7 @@ class Palabra extends Conexion {
 
     }
  public function obtenerPalabra($idPalabra){
-    $query = "SELECT p.idPalabra,p.palabra, t.idTraduccion, t.significados
+    $query = "SELECT p.idPalabra,p.palabra, t.idTraduccion, t.significados, p.audio
     FROM palabras p
     JOIN traducciones t ON p.idPalabra = t.idPalabra
     WHERE p.idPalabra = ".$idPalabra;
@@ -78,9 +81,9 @@ while ($fila = $resultado->fetch_assoc()) {
 return $palabra; 
 }
 public function editarPalabra($datos){
-    $query = "UPDATE palabras SET palabra = ? WHERE idPalabra = ?";
+    $query = "UPDATE palabras SET palabra = ?, audio = ? WHERE idPalabra = ?";
     $stmt = $this->conexion->prepare($query);
-    $stmt->bind_param("si", $datos['palabra'], $datos['idPalabra']);
+    $stmt->bind_param("ssi", $datos['palabra'], $datos['audio'], $datos['idPalabra']);
     $stmt->execute();
     $stmt->close();
 
@@ -95,6 +98,7 @@ public function editarPalabra($datos){
     
     $stmt->close();
 }
+
 public function eliminarTraduccion($idTraduccion){
     $query = "DELETE FROM traducciones WHERE idTraduccion = ?";
     $stmt = $this->conexion->prepare($query);

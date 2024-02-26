@@ -17,15 +17,22 @@ class Controladorpalabra{
     }
     public function aniadirTraducciones(){
         $this->view = 'aniadirtraducciones';
-       print("<pre>".print_r($_POST,true)."</pre>");
     }
     public function guardarPalabra(){
-        $this->view = ' ';
-        print("<pre>".print_r($_POST,true)."</pre>");
+      
+        $audio_base64 = "";
+        if(isset($_FILES['audio'])){
+            $audio_tmp_name = $_FILES['audio']['tmp_name'];
+            if($audio_tmp_name != ""){
+                $audio_data = file_get_contents($audio_tmp_name);
+                $audio_base64 = base64_encode($audio_data);
+            }
+        }
+        $_POST['audio'] = $audio_base64;
         $this->objPalabra->aniadirDatos($_POST);
-       
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$_POST['idClase']);
     }
+    
  
     public function eliminarPalabra(){
         $this->view = 'eliminarpalabra';
@@ -49,6 +56,15 @@ class Controladorpalabra{
     }
     public function editarPalabra(){
         $idClase=$this->objPalabra->obtenerIdClase($_GET['idPalabra']);
+        $audio_base64 = "";
+        if(isset($_FILES['audio'])){
+            $audio_tmp_name = $_FILES['audio']['tmp_name'];
+            if($audio_tmp_name != ""){
+                $audio_data = file_get_contents($audio_tmp_name);
+                $audio_base64 = base64_encode($audio_data);
+            }
+        }
+        $_POST['audio'] = $audio_base64;
         $this->objPalabra->editarPalabra($_POST);
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
     }

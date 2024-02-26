@@ -1,4 +1,4 @@
-<form id="formularioTraducciones" class="formulario" action="index.php?action=guardarPalabra&controller=palabra" method="POST">
+<form id="formularioTraducciones" enctype="multipart/form-data" class="formulario" action="index.php?action=guardarPalabra&controller=palabra" method="POST">
    <h1><?php echo $_POST['palabra']?></h1><br>  
     <label for="audio">Archivo de Audio:</label>
     <input type="file" id="audio" name="audio" accept="audio/*">
@@ -12,10 +12,10 @@
 
     }
     ?>
-    <!-- <input type="hidden" name="audio" value="<?php echo $_POST['audio']?>"> -->
+  
     <input type="hidden" name="palabra" value="<?php echo $_POST['palabra']?>">
     <input type="hidden" id="idClase" name="idClase" value=<?php  echo $_POST['idClase']; ?> >
     <input type="hidden" name="numTraducciones" value="<?php echo $_POST['numTraducciones']?>">
     <input type="submit" id="btnGuardarTraducciones" value="Guardar Traducciones">
 </form>
-<?php    print("<pre>".print_r($_POST,true)."</pre>");
+<?php    print("<pre>".print_r($_POST,true)."</pre>"); 
