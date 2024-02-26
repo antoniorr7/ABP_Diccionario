@@ -1,5 +1,4 @@
-
-<form id="traductor-form" method="post" action="index.php?action=editarPalabra&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>">
+<form id="traductor-form" method="post" action="index.php?action=editarPalabra&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>" enctype="multipart/form-data">
   <?php foreach ($retornado as $index => $data): ?>
     <?php if ($index === 0): ?>
       <input type="hidden" name="idPalabra" value="<?php echo $data['idPalabra']; ?>">
@@ -20,10 +19,14 @@
                 </div>';
                
       } 
-      echo '<input type="hidden" name="audio_data" value="' . $data['audio'] . '">';
+   //verifica si cambiamos el audio
+      echo '    <input type="file" id="audio" name="audio" accept="audio/*" >';
+      // Aquí verificamos si el campo audio_editado está vacío y, si lo está, enviamos el valor del campo audio.
+      if (empty($_FILES['audio']['name'])) {
+        echo '<input type="hidden" name="audio_editado" value="' . $data['audio'] . '">';
+      }
       ?>
       
-    <input type="file" id="audio" name="audio" accept="audio/*" >
       <label for="traduccion">Traducciónes:</label>
     <?php endif; ?>
    
@@ -39,4 +42,3 @@
 </form>
 
 <?php print("<pre>".print_r($retornado,true)."</pre>");?>
-
