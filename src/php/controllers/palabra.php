@@ -66,7 +66,9 @@ class Controladorpalabra{
         }
         $_POST['audio'] = $audio_base64;
         $this->objPalabra->editarPalabra($_POST);
-        header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
+        
+     
+       header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
     }
     public function eliminarTraduccion(){
         $this->view = 'editarpalabra';

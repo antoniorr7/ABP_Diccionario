@@ -81,9 +81,25 @@ while ($fila = $resultado->fetch_assoc()) {
 return $palabra; 
 }
 public function editarPalabra($datos){
-    $query = "UPDATE palabras SET palabra = ?, audio = ? WHERE idPalabra = ?";
+    $query = "UPDATE palabras SET palabra = ? ";
+    $types = 's'; // Tipo de dato para el primer parámetro
+    $params = array(&$datos['palabra']); // Parámetros para el bind_param
+
+    if (!empty($datos['audio'])) {
+        $query .= ", audio = ?" ;
+        $types .= 's'; // Agregar tipo de dato para el segundo parámetro
+        $params[] = &$datos['audio']; // Agregar segundo parámetro al array
+    }
+
+    $query .= " WHERE idPalabra = ?";
+    $types .= 'i'; // Agregar tipo de dato para el tercer parámetro
+    $params[] = &$datos['idPalabra']; // Agregar tercer parámetro al array
+
     $stmt = $this->conexion->prepare($query);
-    $stmt->bind_param("ssi", $datos['palabra'], $datos['audio'], $datos['idPalabra']);
+
+    // Usar call_user_func_array para pasar los parámetros dinámicamente
+    call_user_func_array(array($stmt, 'bind_param'), array_merge(array($types), $params));
+
     $stmt->execute();
     $stmt->close();
 
@@ -98,6 +114,7 @@ public function editarPalabra($datos){
     
     $stmt->close();
 }
+
 
 public function eliminarTraduccion($idTraduccion){
     $query = "DELETE FROM traducciones WHERE idTraduccion = ?";

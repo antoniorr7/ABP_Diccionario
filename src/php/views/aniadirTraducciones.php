@@ -12,7 +12,7 @@
 
     }
     ?>
-  
+
     <input type="hidden" name="palabra" value="<?php echo $_POST['palabra']?>">
     <input type="hidden" id="idClase" name="idClase" value=<?php  echo $_POST['idClase']; ?> >
     <input type="hidden" name="numTraducciones" value="<?php echo $_POST['numTraducciones']?>">

@@ -19,12 +19,7 @@
                 </div>';
                
       } 
-   //verifica si cambiamos el audio
       echo '    <input type="file" id="audio" name="audio" accept="audio/*" >';
-      // Aquí verificamos si el campo audio_editado está vacío y, si lo está, enviamos el valor del campo audio.
-      if (empty($_FILES['audio']['name'])) {
-        echo '<input type="hidden" name="audio_editado" value="' . $data['audio'] . '">';
-      }
       ?>
       
       <label for="traduccion">Traducciónes:</label>
