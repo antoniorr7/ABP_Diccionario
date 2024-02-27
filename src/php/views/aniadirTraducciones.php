@@ -24,5 +24,5 @@
     <input type="hidden" name="numTraducciones" value="<?php echo $numTraducciones ?>">
     <input type="submit" id="btnGuardarTraducciones" value="Guardar ">
 </form>
-<a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
+<a  href="index.php?action=listarPalabras&controller=palabra&idClase=<?php echo $_POST['idClase']; ?>"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>

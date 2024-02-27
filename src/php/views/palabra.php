@@ -40,7 +40,8 @@ if (empty($retornado)) {
                     </div>
                     <div class=action>
                          <a href="index.php?action=rellenarEditar&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEditarPalabra">e </a>
-                         <a href="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEliminarPalabra">x </a>
+                         <a href="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>" id="btnEliminarPalabra">x</a>
+
                     </div>
                 </h2>
                     <ul>
@@ -73,4 +74,3 @@ if (empty($retornado)) {
 <a href="index.php?action=aniadirPalabra&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>" id="btnAgregarPalabra">Añadir Palabra</a>
 <a id=pdf href="index.php?action=PDF&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>">PDF</a>
 </div>
-
