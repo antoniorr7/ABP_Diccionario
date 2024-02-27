@@ -14,7 +14,7 @@
     <div>
       <ul>
         <li><a href="index.php?action=listarClases&controller=clase">Clases</a></li>
-        <li><a href="#">Palabras</a></li>
+        <!-- <li><a href="#">Palabras</a></li> -->
         <li><a href="#">Cerrar Sesión</a></li>
       </ul>
     </div>
