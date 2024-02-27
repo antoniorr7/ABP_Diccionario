@@ -9,11 +9,11 @@
 <div id="confirmacionBorrado">
 <form id="confirmacionForm" action="index.php?action=eliminarClase&controller=clase&id=<?php echo $_GET['id']; ?>" method="POST">
         <p>¿Estás seguro de que deseas borrar esta clase?</p>
-        <label for="confirmarSi">Sí</label>
-        <input type="radio" id="confirmarSi" name="confirmarBorrado" value="si">
-        <label for="confirmarNo">No</label>
-        <input type="radio" id="confirmarNo" name="confirmarBorrado" value="no">
-        <input type="submit">
+       
+        <input type="hidden" id="confirmarSi" name="confirmarBorrado" value="si">
+        
+        <input type="submit" value= Eliminar>
        </form>
+       <a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>
 

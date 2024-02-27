@@ -39,7 +39,8 @@ class Palabra extends Conexion {
     
     
     public function aniadirDatos($datos) {
-        // Insertar la palabra
+
+         // Insertar la palabra
         $palabra = $datos['palabra'];
         $audio = $datos['audio'];
         $idClase = $datos['idClase'];
@@ -56,6 +57,8 @@ class Palabra extends Conexion {
         }
         
         $this->conexion->multi_query($query);
+      
+        
     }
     
     

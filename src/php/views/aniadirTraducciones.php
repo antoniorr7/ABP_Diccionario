@@ -18,3 +18,4 @@
     <input type="hidden" name="numTraducciones" value="<?php echo $_POST['numTraducciones']?>">
     <input type="submit" id="btnGuardarTraducciones" value="Guardar Traducciones">
 </form>
+<a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>

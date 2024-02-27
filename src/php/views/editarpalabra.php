@@ -35,5 +35,6 @@
   <input type="submit" id="editar" value="Traducir">
   <a href="index.php?action=aniadirTraduccion&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>">añadir Traduccion</a>
 </form>
+<a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 
 

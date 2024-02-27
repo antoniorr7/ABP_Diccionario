@@ -6,3 +6,4 @@
     <input type="number" id="numTraducciones" name="numTraducciones" class="campoNumero" min="1" required>
     <input type="submit" id="btnAñadirPalabra" value="Añadir Palabra">
 </form>
+<a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>

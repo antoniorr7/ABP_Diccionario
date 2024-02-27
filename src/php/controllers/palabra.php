@@ -21,6 +21,7 @@ class Controladorpalabra{
     }
     public function aniadirTraducciones(){
         $this->view = 'aniadirtraducciones';
+        
     }
     public function guardarPalabra(){
       
