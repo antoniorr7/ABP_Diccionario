@@ -12,6 +12,10 @@ class Controladorpalabra{
         $this->view = 'palabra';
         return $this->objPalabra->listarPalabras($_GET['idClase']);
     }
+    public function PDF (){
+        $this->view = 'pdf';
+        return $this->objPalabra->listarPalabras($_GET['idClase']);
+    }
     public function aniadirPalabra(){
         $this->view = 'aniadirpalabra';
     }

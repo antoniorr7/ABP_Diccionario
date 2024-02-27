@@ -18,4 +18,3 @@
     <input type="hidden" name="numTraducciones" value="<?php echo $_POST['numTraducciones']?>">
     <input type="submit" id="btnGuardarTraducciones" value="Guardar Traducciones">
 </form>
-<?php    print("<pre>".print_r($_POST,true)."</pre>"); 

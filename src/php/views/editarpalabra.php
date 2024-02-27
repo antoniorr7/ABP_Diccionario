@@ -36,4 +36,4 @@
   <a href="index.php?action=aniadirTraduccion&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>">añadir Traduccion</a>
 </form>
 
-<?php print("<pre>".print_r($retornado,true)."</pre>");?>
+

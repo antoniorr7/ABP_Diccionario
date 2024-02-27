@@ -24,7 +24,12 @@ require_once 'config/config.php';
     // Llamada al metodo y guarda los datos en $retornado   
         $retornado = $controlador->{$_GET["action"]}();
 // Cargar las vistas
-require_once 'views/templates/header.php';
-require_once 'views/' . $controlador->view . '.php';
-require_once 'views/templates/footer.php';
+//controlar el menu
+if ($controlador->view === 'login') {
+    require_once 'views/' . $controlador->view . '.php';
+}else{
+    require_once 'views/templates/header.php';
+    require_once 'views/' . $controlador->view . '.php';
+    require_once 'views/templates/footer.php';
+}
 ?>
