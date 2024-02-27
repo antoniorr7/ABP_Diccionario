@@ -2,11 +2,11 @@
 class Controladorclase{
     public $pagina;
     public $view;
-    private $objClases;
+    private $modeloClase;
     public function __construct() {
         require_once 'models/clase.php';
         $this->view = '';
-        $this->objClases = new Clase();
+        $this->modeloClase = new Clase();
     }
     public function inicio() {
         $this->view = 'inicio';
@@ -14,17 +14,17 @@ class Controladorclase{
 
     public function listarClases() {
         $this->view = 'clase';
-        return $this->objClases->listar(); 
+        return $this->modeloClase->listar(); 
     }
     public function listarClase($id) {
        
-        return $this->objClases->listarClase($id); 
+        return $this->modeloClase->listarClase($id); 
     }
     public function aniadirClases(){
         $this->view = 'aniadirclase';
         if (isset($_POST['nombreClase']) && !empty($_POST['nombreClase'])) {
          
-            $this->objClases->aniadir($_POST['nombreClase']);
+            $this->modeloClase->aniadir($_POST['nombreClase']);
     
             header('Location: index.php?action=listarClases&controller=clase');
         }
@@ -34,7 +34,7 @@ class Controladorclase{
        
             if (isset($_POST['confirmarBorrado']) && $_POST['confirmarBorrado'] === 'si') {
              
-                    $this->objClases->borrar($_GET['id']);
+                    $this->modeloClase->borrar($_GET['id']);
                    header('Location:index.php?action=listarClases&controller=clase');
 
             }
@@ -53,7 +53,7 @@ class Controladorclase{
         
        
             
-            $this->objClases->editar($_POST['id'],$_POST['nombreClase']);
+            $this->modeloClase->editar($_POST['id'],$_POST['nombreClase']);
 
             header('Location: index.php?action=listarClases&controller=clase');
         }

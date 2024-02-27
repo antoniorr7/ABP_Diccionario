@@ -9,7 +9,7 @@ if (empty($retornado)) {
             $nombreClase = $indice['nombreClase'];
         }
         echo $nombreClase; ?></h1>
-        <a href="index.php?action=PDF&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>">PDF</a>
+        
     <div class="panel-administracion">
         <?php
         // Array para llevar un registro de las palabras mostradas
@@ -69,4 +69,8 @@ if (empty($retornado)) {
 <?php } ?>
 
 <!-- Enlace para añadir una nueva palabra -->
+<div id=abajo>
 <a href="index.php?action=aniadirPalabra&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>" id="btnAgregarPalabra">Añadir Palabra</a>
+<a id=pdf href="index.php?action=PDF&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>">PDF</a>
+</div>
+

@@ -1,3 +1,4 @@
+<div class="popup">
 <form id="formularioPalabra" class="formulario" action="index.php?action=aniadirTraducciones&controller=palabra" method="POST" enctype="multipart/form-data">
     <input type="hidden" id="idClase" name="idClase" value="<?php echo $_GET['idClase']; ?>">
     <label for="palabra">Palabra:</label>
@@ -7,3 +8,4 @@
     <input type="submit" id="btnAñadirPalabra" value="Añadir Palabra">
 </form>
 <a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
+</div>

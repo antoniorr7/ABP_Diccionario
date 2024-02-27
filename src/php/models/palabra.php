@@ -38,30 +38,32 @@ class Palabra extends Conexion {
     }
     
     
-    public function aniadirDatos($datos) {
+    public function aniadirPalabra($datos) {
 
-         // Insertar la palabra
-        $palabra = $datos['palabra'];
-        $audio = $datos['audio'];
-        $idClase = $datos['idClase'];
-        
-        $query = "INSERT INTO palabras (idClase, palabra, audio) VALUES ('$idClase', '$palabra', '$audio');";
-        
-        // Obtener el ID de la palabra insertada
-        $query .= "SET @idPalabra = LAST_INSERT_ID();";
-        
-        // Insertar las traducciones
-        for ($i = 1; $i <= $datos['numTraducciones']; $i++) {
-            $traduccion = $datos["traduccion".$i];
-            $query .= "INSERT INTO traducciones (significados, idPalabra) VALUES ('$traduccion', @idPalabra);";
-        }
-        
-        $this->conexion->multi_query($query);
-      
-        
-    }
-    
-    
+        // Insertar la palabra
+       $palabra = $datos['palabra'];
+       $audio = $datos['audio'];
+       $idClase = $datos['idClase'];
+       
+       $query = "INSERT INTO palabras (idClase, palabra, audio) VALUES ('$idClase', '$palabra', '$audio')";
+       
+       $this->conexion->query($query);
+       
+       // Obtener el ID de la palabra insertada
+       $idPalabra = $this->conexion->insert_id;
+   
+       return $idPalabra;
+   }
+   
+   public function aniadirTraducciones($idPalabra, $datos) {
+       
+       // Insertar las traducciones
+       for ($i = 1; $i <= $datos['numTraducciones']; $i++) {
+           $traduccion = $datos["traduccion".$i];
+           $query = "INSERT INTO traducciones (significados, idPalabra) VALUES ('$traduccion', '$idPalabra')";
+           $this->conexion->query($query);
+       }
+   }
     public function eliminarPalabra($idPalabra) {
 
     $query = "DELETE FROM palabras WHERE idPalabra = ?";
@@ -84,39 +86,33 @@ while ($fila = $resultado->fetch_assoc()) {
 return $palabra; 
 }
 public function editarPalabra($datos){
-    $query = "UPDATE palabras SET palabra = ? ";
-    $types = 's'; // Tipo de dato para el primer parámetro
-    $params = array(&$datos['palabra']); // Parámetros para el bind_param
-
+    $query = "UPDATE palabras SET palabra = ?";
+  
     if (!empty($datos['audio'])) {
-        $query .= ", audio = ?" ;
-        $types .= 's'; // Agregar tipo de dato para el segundo parámetro
-        $params[] = &$datos['audio']; // Agregar segundo parámetro al array
+        $query .= ", audio = ?";
+
     }
-
     $query .= " WHERE idPalabra = ?";
-    $types .= 'i'; // Agregar tipo de dato para el tercer parámetro
-    $params[] = &$datos['idPalabra']; // Agregar tercer parámetro al array
-
+  
     $stmt = $this->conexion->prepare($query);
-
-    // Usar call_user_func_array para pasar los parámetros dinámicamente
-    call_user_func_array(array($stmt, 'bind_param'), array_merge(array($types), $params));
-
+    if (!empty($datos['audio'])) {
+        $stmt->bind_param("ssi", $datos['palabra'],$datos['audio'],$datos['idPalabra']);
+      
+    }else{ 
+        $stmt->bind_param("si", $datos['palabra'],$datos['idPalabra']);
+    }
     $stmt->execute();
     $stmt->close();
-
     $query = "UPDATE traducciones SET significados = ? WHERE idTraduccion = ?";
     $stmt = $this->conexion->prepare($query);
-    
     foreach ($datos['idTraduccion'] as $id => $idTraduccion) {
-        $significado = $datos['traduccion'][$id];
-        $stmt->bind_param("si", $significado, $idTraduccion);
+        $stmt->bind_param("si", $datos['traduccion'][$id], $idTraduccion);
         $stmt->execute();
     }
-    
     $stmt->close();
 }
+
+
 
 
 public function eliminarTraduccion($idTraduccion){

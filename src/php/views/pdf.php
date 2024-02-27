@@ -65,7 +65,7 @@ if (empty($retornado)) {
     </div>
     
 <?php } $html=ob_get_clean();
-// echo $html;
+
 // Importo libreria dompdf
 require_once '../php/library/dompdf/autoload.inc.php';
 use Dompdf\Dompdf;

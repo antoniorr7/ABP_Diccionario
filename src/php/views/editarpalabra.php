@@ -1,3 +1,4 @@
+<div class="popup">
 <form id="traductor-form" method="post" action="index.php?action=editarPalabra&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>" enctype="multipart/form-data">
   <?php foreach ($retornado as $index => $data): ?>
     <?php if ($index === 0): ?>
@@ -37,4 +38,4 @@
 </form>
 <a  href="index.php?action=listarClases&controller=clase"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 
-
+</div>
