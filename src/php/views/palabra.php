@@ -1,7 +1,7 @@
 <?php
 // Verificar si $retornado está vacío
-if (empty($retornado)) {
-    echo "<h1>No hay datos disponibles</h1>";
+if (isset($retornado['mensaje'])) {
+    echo $retornado['mensaje'];
 } else {
 ?>
     <h1><?php
@@ -39,7 +39,7 @@ if (empty($retornado)) {
                     ?>
                     </div>
                     <div class=action>
-                         <a href="index.php?action=rellenarEditar&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>" id="btnEditarPalabra">e </a>
+                         <a href="index.php?action=rellenarEditar&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>" id="btnEditarPalabra">e </a>
                          <a href="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>" id="btnEliminarPalabra">x</a>
 
                     </div>

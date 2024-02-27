@@ -35,9 +35,11 @@ class Controladorpalabra{
             if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) === 'mp3') {
                 $audio_data = file_get_contents($audio_tmp_name);
                 $audio_base64 = base64_encode($audio_data);
+              
             } else {
                 // Si el archivo no es un MP3, establecer audio_base64 como null
                 $audio_base64 = null;
+
             }
     
             $_POST['audio'] = $audio_base64;

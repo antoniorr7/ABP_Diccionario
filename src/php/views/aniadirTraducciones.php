@@ -4,7 +4,10 @@
     <label for="audio">Archivo de Audio:</label>
     <input type="file" id="audio" name="audio" accept="audio/*">
     <?php
-    
+    if (isset($retornado['mensaje'])) {
+        echo $retornado['mensaje'];
+    }
+   
     $numTraducciones = $_POST['numTraducciones'];
     
     // Verificar si $numTraducciones es distinto de un número y mostrar un error

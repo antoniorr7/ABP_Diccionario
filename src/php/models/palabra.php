@@ -20,7 +20,9 @@ class Palabra extends Conexion {
         
         // Comprobar si el arreglo de palabras está vacío
         if(empty($palabras)) {
-            return false; // Devolver false si no hay palabras
+            $mensajeError='<h1>No hay palabras asociada a esta clase</h1>';
+            return ['mensaje' => $mensajeError];
+            return $retornado['mensaje']; // Devolver false si no hay palabras
         } else {
             return $palabras; // Devolver el arreglo de palabras si hay palabras
         }
@@ -71,7 +73,7 @@ class Palabra extends Conexion {
     $stmt->bind_param("i", $idPalabra);
     $stmt->execute();
     $stmt->close();
-
+   
     }
  public function obtenerPalabra($idPalabra){
     $query = "SELECT p.idPalabra,p.palabra, t.idTraduccion, t.significados, p.audio
