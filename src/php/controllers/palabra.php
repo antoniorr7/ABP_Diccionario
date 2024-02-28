@@ -15,6 +15,10 @@ class Controladorpalabra{
         return $this->modeloPalabra->listarPalabras($_GET['idClase']);
     }
     public function PDF() {
+        if (empty($datos)) {
+            $this->view= 'error';
+            return 'no se puede generar el pdf porque no existen palabras';
+        }
         $datos = $this->modeloPalabra->listarPalabras($_GET['idClase']);
         ob_start();
         echo "<h1>{$datos[0]['nombreClase']}</h1>";
@@ -50,7 +54,7 @@ class Controladorpalabra{
         $dompdf->render();
         $dompdf->stream("{$datos[0]['nombreClase']}.pdf", ['Attachment' => 0]);
     }
-    
+ 
     public function aniadirPalabra(){
         $this->view = 'aniadirpalabra';
     }
