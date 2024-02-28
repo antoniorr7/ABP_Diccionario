@@ -1,18 +1,15 @@
 <?php
 ob_start();
-// Verificar si $retornado está vacío
-if (empty($retornado)) {
-    echo "<h1>No hay datos disponibles</h1>";
-} else {
-?>
-    <h1><?php
-        foreach ($retornado as $indice) {
-            $nombreClase = $indice['nombreClase'];
-        }
-        echo $nombreClase; ?></h1>
 
-    <div class="panel-administracion">
-        <?php
+echo '<h1>';
+foreach ($retornado as $indice) {
+    $nombreClase = $indice['nombreClase'];
+}
+echo $nombreClase;
+echo '</h1>';
+
+  echo'  <div class="panel-administracion">';
+     
         // Array para llevar un registro de las palabras mostradas
         $palabras_mostradas = array();
 
@@ -63,9 +60,7 @@ if (empty($retornado)) {
         endforeach;
         ?>
     </div>
-    
-<?php } $html=ob_get_clean();
-
+<?php  $html=ob_get_clean();
 // Importo libreria dompdf
 require_once '../php/library/dompdf/autoload.inc.php';
 use Dompdf\Dompdf;
@@ -81,4 +76,3 @@ $dompdf->render();
 // Guardar PDF en disco
 $dompdf->stream("$nombreClase.pdf", array('Attachment' => 0));
 ?>
-

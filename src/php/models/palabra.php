@@ -132,4 +132,3 @@ public function aniadirTraduccion($idPalabra){
     $stmt->close();
 }
 }
-?>

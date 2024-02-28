@@ -35,14 +35,8 @@ class Controladorpalabra{
             if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) === 'mp3') {
                 $audio_data = file_get_contents($audio_tmp_name);
                 $audio_base64 = base64_encode($audio_data);
-              
-            } else {
-                // Si el archivo no es un MP3, establecer audio_base64 como null
-                $audio_base64 = null;
 
-            }
-    
-            $_POST['audio'] = $audio_base64;
+                 $_POST['audio'] = $audio_base64;
             
             // Llamar al método aniadirPalabra para insertar la palabra y obtener el ID
             $idPalabra = $this->modeloPalabra->aniadirPalabra($_POST);
@@ -54,6 +48,15 @@ class Controladorpalabra{
            
             
             header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$_POST['idClase']);
+              
+            } else {
+                // Si el archivo no es un MP3, establecer audio_base64 como null
+                $audio_base64 = null;
+                $this->view= 'error';
+                return "El archivo de audio debe ser un archivo de audio .mp3";
+            }
+    
+           
            
         }
     }
