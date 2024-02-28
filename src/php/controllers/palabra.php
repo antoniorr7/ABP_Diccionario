@@ -1,4 +1,5 @@
 <?php
+  use Dompdf\Dompdf;
 class Controladorpalabra{
     public $pagina;
     public $view;
@@ -13,11 +14,43 @@ class Controladorpalabra{
         
         return $this->modeloPalabra->listarPalabras($_GET['idClase']);
     }
-    public function PDF (){
-        $this->view = 'pdf';
-        return $this->modeloPalabra->listarPalabras($_GET['idClase']);
-        
+    public function PDF() {
+        $datos = $this->modeloPalabra->listarPalabras($_GET['idClase']);
+        ob_start();
+        echo "<h1>{$datos[0]['nombreClase']}</h1>";
+        echo '<div class="panel-administracion">';
+        $palabras_mostradas = [];
+        foreach ($datos as $palabra) {
+            if (!in_array($palabra['palabra'], $palabras_mostradas)) {
+                $palabras_mostradas[] = $palabra['palabra'];
+                echo '<div class="clase"><h2><div id="palabra">' . $palabra['palabra'];
+                if (isset($palabra['audio']) && !empty($palabra['audio'])) {
+                    $audio_decoded = base64_decode($palabra['audio']);
+                    $audio_data_uri = 'data:audio/mpeg;base64,' . base64_encode($audio_decoded);
+                    echo '<div class="audio-container"><audio controls><source src="' . $audio_data_uri . '" type="audio/mpeg"></audio></div>';
+                }
+                echo '</div></h2><ul>';
+                foreach ($datos as $info) {
+                    if ($info['palabra'] === $palabra['palabra']) {
+                        echo '<li>' . ($info['significados'] === NULL ? 'No hay significados' : $info['significados']) . '</li>';
+                    }
+                }
+                echo '</ul></div>';
+            }
+        }
+        echo '</div>';
+        $html = ob_get_clean();
+        require_once '../php/library/dompdf/autoload.inc.php';
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->set(['isRemoteEnabled' => true]);
+        $dompdf->setOptions($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('letter');
+        $dompdf->render();
+        $dompdf->stream("{$datos[0]['nombreClase']}.pdf", ['Attachment' => 0]);
     }
+    
     public function aniadirPalabra(){
         $this->view = 'aniadirpalabra';
     }
