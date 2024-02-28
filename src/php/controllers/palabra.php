@@ -92,9 +92,11 @@ class Controladorpalabra{
         if ($idPalabra) {
             $this->modeloPalabra->aniadirTraducciones($idPalabra, $_POST);
         }
-        
+        // $this->view = 'palabra';
+        // return $this->modeloPalabra->listarPalabras($_POST['idClase']);
+        //si uso header se rompe todo lo que cojo en la vista con get
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$_POST['idClase']);
-        exit(); // Detener la ejecución después de la redirección
+        exit(); 
     }
     
     
@@ -140,7 +142,7 @@ class Controladorpalabra{
         $this->modeloPalabra->editarPalabra($_POST);
         
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
-        exit(); // Es buena práctica salir después de redireccionar
+        exit(); 
     }
     
     public function eliminarTraduccion(){
