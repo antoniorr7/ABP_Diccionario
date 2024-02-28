@@ -233,6 +233,9 @@ thead th {
 .popup h2 {
   margin-top: 0;
 }
+.popup img {
+  width: 5%
+}
 
 input[type="text"],
 input[type="submit"] {

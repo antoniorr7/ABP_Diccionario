@@ -8,6 +8,6 @@
     <br>
     <input type="submit" value="Enviar" class="btn">
   </form>
-    <a href="index.php?action=listarClases&controller=clase"><img src="" alt="atras"></a>
+    <a href="index.php?action=listarClases&controller=clase"><img src="../img/flecha-izquierda.png" alt="atras"></a>
 </div>
 <?php endforeach; ?>
