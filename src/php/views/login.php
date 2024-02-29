@@ -10,13 +10,19 @@
 
 <div class="login-container">
     <h2>Inicio de Sesión</h2>
-    <form action="#" method="post">
-        <input type="text" name="username" placeholder="Nombre de usuario" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
+    <form action="index.php?controller=login&action=IniciarSesion" method="post">
+        
+        <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required>
+        <input type="password" name="contrasena" placeholder="Contraseña" required>
+
         <input type="submit" value="Iniciar Sesión">
+        <?php echo ($retornado['mensaje'] ?? '') ? "<span style='color: red;'>".$retornado['mensaje']."</span>" : ''; ?>
+
+
+
     </form>
     <div class="form-footer">
-        <p>¿No tienes una cuenta? <a href="#" class="register-link">Regístrate aquí</a></p>
+        <p>¿No tienes una cuenta? <a href="index.php?controller=login&action=mostrarRegistro" class="register-link">Regístrate aquí</a></p>
     </div>
 </div>
 

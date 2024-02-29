@@ -25,7 +25,7 @@ require_once 'config/config.php';
         $retornado = $controlador->{$_GET["action"]}();
 // Cargar las vistas
 //controlar el menu
-if ($controlador->view === 'login' || $controlador->view === 'pdf' ) {
+if ($controlador->view === 'login' || $controlador->view === 'pdf'  || $controlador->view === 'registro') {
     require_once 'views/' . $controlador->view . '.php';
 }else{
     require_once 'views/templates/header.php';

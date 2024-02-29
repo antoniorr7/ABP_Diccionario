@@ -494,6 +494,9 @@ body {
 
 .clase {
   margin-top: 20px;
+  background-color: #c5c5c5;
+  padding: 2%;
+  border-radius: 10px;
 }
 
 .clase h2 {

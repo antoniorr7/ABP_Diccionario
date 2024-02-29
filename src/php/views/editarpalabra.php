@@ -30,11 +30,12 @@
         <input type="hidden" name="idTraduccion[]" value="<?php echo $data['idTraduccion']; ?>">
         <input type="text" id="traduccion" name="traduccion[]" value="<?php echo isset($data['significados']) ? $data['significados'] : ''; ?>">
         <?php if (count($retornado) > 1): ?>
-          <a href="index.php?action=eliminarTraduccion&controller=palabra&idTraduccion=<?php echo $data['idTraduccion']; ?>&idPalabra=<?php echo $data['idPalabra']; ?>">eliminar</a>
+          <a href="index.php?action=eliminarTraduccion&controller=palabra&idTraduccion=<?php echo $data['idTraduccion']; ?>&idPalabra=<?php echo $data['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>">eliminar</a>
         <?php endif; ?>
       </div>
     <?php endforeach; ?>
-    <input type="submit" id="editar" value="Traducir">
-    <a href="index.php?action=aniadirTraduccion&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>">añadir Traducción</a>
+    <input type="submit" id="editar" value="Guardar">
+    <a href="index.php?action=aniadirTraduccion&controller=palabra&idPalabra=<?php echo $_GET['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>">añadir Traducción</a>
   </form>
+  <a  href="index.php?action=listarPalabras&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>

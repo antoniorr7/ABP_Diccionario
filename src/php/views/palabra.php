@@ -74,3 +74,5 @@ if (isset($retornado['mensaje'])) {
 <a href="index.php?action=aniadirPalabra&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>" id="btnAgregarPalabra">Añadir Palabra</a>
 <a id=pdf href="index.php?action=PDF&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>">PDF</a>
 </div>
+<a  href="index.php?action=listarClases&controller=clase"><img id="atras" src="../img/flecha-izquierda.png" alt=""></a>
+

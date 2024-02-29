@@ -20,3 +20,16 @@ CREATE TABLE IF NOT EXISTS `traducciones` (
   `idPalabra` int(11) DEFAULT NULL,
   FOREIGN KEY (`idPalabra`) REFERENCES `palabras` (`idPalabra`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Estructura de tabla para la tabla `usuarios`
+CREATE TABLE IF NOT EXISTS `usuarios` (
+  `idUsuario` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `nombreUsuario` varchar(255) NOT NULL,
+  `contrasena` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Añadir restricción de unicidad al campo nombreUsuario en la tabla usuarios
+ALTER TABLE usuarios
+ADD CONSTRAINT nombreUsuario_unico UNIQUE (nombreUsuario);
+ALTER TABLE usuarios
+ADD COLUMN esAdmin BIT DEFAULT 0;
