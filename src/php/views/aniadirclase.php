@@ -3,7 +3,7 @@
   <form action="index.php?action=aniadirClases&controller=clase" method="post">
     <input type="hidden" value='<?php echo $_GET['idClase']; ?>'>
     <label for="nombreClase">Nombre de la Clase:</label>
-    <input type="text" id="nombreClase" name="nombreClase" required>
+    <input type="text" id="nombreClase" name="nombreClase" >
     <br>
     <input type="submit" value="Enviar" class="btn">
   </form>

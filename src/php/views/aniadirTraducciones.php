@@ -17,7 +17,7 @@
     } else {
         echo '<label for="traduccion">Traducciones :</label>';
         for ($i = 1; $i <= $numTraducciones; $i++) {
-            echo '<input type="text" id="traduccion" name="traduccion'.$i.'" class="campoTexto" style="border: 2px solid #ccc; border-radius: 5px; padding: 5px;" required>';
+            echo '<input type="text" id="traduccion" name="traduccion'.$i.'" class="campoTexto" style="border: 2px solid #ccc; border-radius: 5px; padding: 5px;" >';
         }
     }
     ?>
@@ -26,6 +26,10 @@
     <input type="hidden" id="idClase" name="idClase" value=<?php  echo $_POST['idClase']; ?> >
     <input type="hidden" name="numTraducciones" value="<?php echo $numTraducciones ?>">
     <input type="submit" id="btnGuardarTraducciones" value="Guardar ">
+    <?php   
+    if (isset($retornado)) {
+        echo '<p style="color: red;">'.$retornado.'</p>'; }
+    ?>
 </form>
 <a  href="index.php?action=listarPalabras&controller=palabra&idClase=<?php echo $_POST['idClase']; ?>"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>

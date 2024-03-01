@@ -236,7 +236,10 @@ thead th {
 .popup img {
   width: 5%
 }
+.action img{
+  height: 20px;
 
+}
 input[type="text"],
 input[type="submit"] {
   padding: 10px;
@@ -287,10 +290,13 @@ input[type="submit"]:hover {
 #confirmacionBorrado button:hover {
   background-color: #0056b3;
 }
-#atras{
-  width:5%;
-  width: 5%;
+#atras {
+  display: block;
+  width: 2.5rem; /* Ancho relativo de la imagen */
+  margin: 2% auto 5%; /* Margen automático en los lados y un 2% arriba y 5% abajo */
 }
+
+
 #tran {
   font-size: 12px; /* Tamaño del texto */
   padding: 6px 10px; /* Espaciado interno del botón */
@@ -494,7 +500,7 @@ body {
 
 .clase {
   margin-top: 20px;
-  background-color: #c5c5c5;
+  background-color: #c5c5c594;
   padding: 2%;
   border-radius: 10px;
 }
@@ -567,7 +573,7 @@ body {
 
 .clase ul li{
 
-  background-color: #e8e6e693;
+  background-color: #ffffff;
 
   padding: 1%;
   border-radius: 5px;

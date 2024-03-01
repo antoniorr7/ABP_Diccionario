@@ -39,3 +39,5 @@
   </form>
   <a  href="index.php?action=listarPalabras&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>
+<?php   print("<pre>".print_r($_POST,true)."</pre>");
+     print("<pre>".print_r($_GET,true)."</pre>");?>

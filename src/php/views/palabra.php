@@ -39,8 +39,8 @@ if (isset($retornado['mensaje'])) {
                     ?>
                     </div>
                     <div class=action>
-                         <a href="index.php?action=rellenarEditar&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>" id="btnEditarPalabra">e </a>
-                         <a href="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>" id="btnEliminarPalabra">x</a>
+                         <a href="index.php?action=rellenarEditar&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>" id="btnEditarPalabra"><img src="../img/lapiz.png" alt="atras"></a>
+                         <a href="index.php?action=eliminarPalabra&controller=palabra&idPalabra=<?php echo $palabra['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>" id="btnEliminarPalabra"><img src="../img/borrar.png" alt="atras"></a>
 
                     </div>
                 </h2>
