@@ -123,7 +123,6 @@ class Controladorpalabra{
         // $this->view = 'palabra';
         // return $this->modeloPalabra->listarPalabras($_POST['idClase']);
         //si uso header se rompe todo lo que cojo en la vista con get
-        print("<pre>".print_r($_POST,true)."</pre>");
        
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$_POST['idClase']);
         exit(); 
@@ -147,28 +146,55 @@ class Controladorpalabra{
     }
     public function rellenarEditar(){
         $this->view = 'editarpalabra';
-        
+      
         return $this->modeloPalabra->obtenerPalabra($_GET['idPalabra']);
 
     }
-    public function editarPalabra(){
+    public function editarPalabra() {
+      
         $idClase = $this->modeloPalabra->obtenerIdClase($_GET['idPalabra']);
         $audio_base64 = "";
-        if(isset($_FILES['audio'])){
+     // Comprobar si la palabra está vacía
+     if(empty(trim($_POST['palabra']))) {
+        $this->view = 'error';
+        return "La palabra no puede estar vacía.";
+    }
+
+        // Comprobar si se ha enviado un archivo de audio
+        if(isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
             $audio_tmp_name = $_FILES['audio']['tmp_name'];
             $audio_name = $_FILES['audio']['name'];
             
             // Verificar si el nombre del archivo termina con ".mp3"
-            if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) === 'mp3') {
+            if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) === 'mp3' ) {
                 $audio_data = file_get_contents($audio_tmp_name);
                 $audio_base64 = base64_encode($audio_data);
             } else {
                 $this->view='error';
                 return "El archivo de audio debe ser un archivo de audio .mp3";
-              
-                
             }
         }
+        
+       
+     // Bandera para verificar si al menos una traducción no está vacía
+     $hayTraduccion = false;
+    
+     // Comprobar si hay traducciones vacías
+     foreach($_POST['traduccion'] as $index => $traduccion) {
+         if(empty(trim($traduccion))) {
+             // Eliminar la traducción correspondiente de la base de datos
+             $this->modeloPalabra->eliminarTraduccion($_POST['idTraduccion'][$index]);
+         } else {
+             // Se encontró al menos una traducción no vacía
+             $hayTraduccion = true;
+         }
+     }
+     
+     // Si no hay al menos una traducción no vacía, devuelve un error
+     if(!$hayTraduccion) {
+         $this->view = 'error';
+         return "Debe haber al menos una traducción no vacía.";
+     }
     
         $_POST['audio'] = $audio_base64;
         $this->modeloPalabra->editarPalabra($_POST);
@@ -176,6 +202,9 @@ class Controladorpalabra{
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
         exit(); 
     }
+    
+    
+    
     
     public function eliminarTraduccion(){
         $this->view = 'editarpalabra';

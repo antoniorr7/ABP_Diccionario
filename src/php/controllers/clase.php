@@ -20,14 +20,21 @@ class Controladorclase{
        
         return $this->modeloClase->listarClase($id); 
     }
-    public function aniadirClases(){
+    public function formularioClase() {
         $this->view = 'aniadirclase';
+    }
+    public function aniadirClases(){
+      
         if (isset($_POST['nombreClase']) && !empty($_POST['nombreClase'])) {
          
             $this->modeloClase->aniadir($_POST['nombreClase']);
     
             header('Location: index.php?action=listarClases&controller=clase');
+        }else{
+            $this->view='error';
+            return "El nombre de la clase no puede estar vacío.";
         }
+        
     }
     public function eliminarClase(){
         $this->view = 'eliminarclase';
@@ -48,15 +55,21 @@ class Controladorclase{
         $this->view = 'editarclase';
         return $clase =  ($this->listarClase($_GET['id']));
     }
-    public function editarClases(){
+    public function editarClases() {
         $this->view = 'clase';
         
-       
-            
-            $this->modeloClase->editar($_POST['id'],$_POST['nombreClase']);
-
-            header('Location: index.php?action=listarClases&controller=clase');
+        // Verificar si se ha enviado el nombre de la clase
+        if(empty(trim($_POST['nombreClase']))) {
+            $this->view = 'error';
+            return "El nombre de la clase no puede estar vacío.";
         }
+        
+        // Realizar la edición solo si el nombre de la clase no está vacío
+        $this->modeloClase->editar($_POST['id'], $_POST['nombreClase']);
+    
+        header('Location: index.php?action=listarClases&controller=clase');
+    }
+    
     
 }
 ?>

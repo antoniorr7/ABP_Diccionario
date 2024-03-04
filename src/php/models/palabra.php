@@ -39,7 +39,6 @@ class Palabra extends Conexion {
         return $idClase;
     }
     
-    
     public function aniadirPalabra($datos) {
 
         // Insertar la palabra
@@ -127,7 +126,14 @@ public function eliminarTraduccion($idTraduccion){
     $stmt->close();
 }
 public function aniadirTraduccion($idPalabra){
-    $query = "INSERT INTO traducciones (significados, idPalabra) VALUES (' ', ?)";
+    $query = "INSERT INTO traducciones (significados, idPalabra) VALUES ('', ?)";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bind_param("i", $idPalabra);
+    $stmt->execute();
+    $stmt->close();
+}
+public function aniadirTraduccionV($idPalabra){
+    $query = "INSERT INTO traducciones (significados, idPalabra) VALUES (NULL, ?)";
     $stmt = $this->conexion->prepare($query);
     $stmt->bind_param("i", $idPalabra);
     $stmt->execute();

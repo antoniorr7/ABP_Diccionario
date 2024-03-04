@@ -25,7 +25,7 @@
         
         <label for="traduccion">Traducciones:</label>
       <?php endif; ?>
-     
+     <input type= hidden name=idClase value=<?php echo $_GET['idClase']; ?>>
       <div class="input-container" id="traducciones-container">
         <input type="hidden" name="idTraduccion[]" value="<?php echo $data['idTraduccion']; ?>">
         <input type="text" id="traduccion" name="traduccion[]" value="<?php echo isset($data['significados']) ? $data['significados'] : ''; ?>">
@@ -39,5 +39,3 @@
   </form>
   <a  href="index.php?action=listarPalabras&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>
-<?php   print("<pre>".print_r($_POST,true)."</pre>");
-     print("<pre>".print_r($_GET,true)."</pre>");?>

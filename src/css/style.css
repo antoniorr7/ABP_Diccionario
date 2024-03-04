@@ -627,3 +627,17 @@ h2{
   justify-content: center;
   align-items: center;
 }
+/*MENSAJE DE ERROR*/
+#mensajeContainer {
+  background-color: #ffcccc; /* Color de fondo rojo claro */
+  border: 2px solid #ff0000; /* Borde rojo */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados */
+  margin-bottom: 20px; /* Margen inferior para separarlo del siguiente contenido */
+}
+
+/* Estilo para el mensaje de error */
+#mensaje {
+  color: #ff0000; /* Color de texto rojo */
+  font-weight: bold; /* Texto en negrita */
+}

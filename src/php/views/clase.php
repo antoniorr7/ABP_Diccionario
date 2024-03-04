@@ -33,5 +33,5 @@
 
 </div>
 <div  id='aniadirclase'>
-  <a href='index.php?action=aniadirClases&controller=clase'>Agregar Clase</a>
+  <a href='index.php?action=formularioClase&controller=clase'>Agregar Clase</a>
 </div>
