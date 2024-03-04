@@ -64,8 +64,8 @@ class Controladorpalabra{
         if($_POST['numTraducciones'] > 0 && !empty($_POST['palabra']) && is_numeric($_POST['numTraducciones'])) {
             $this->view = 'aniadirtraducciones';
             
-        print("<pre>".print_r($_GET,true)."</pre>");
-        print("<pre>".print_r($_POST,true)."</pre>");
+        // print("<pre>".print_r($_GET,true)."</pre>");
+        // print("<pre>".print_r($_POST,true)."</pre>");
         }else{
             $this->view='aniadirpalabra';
             

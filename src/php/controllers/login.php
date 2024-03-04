@@ -25,7 +25,7 @@ class Controladorlogin{
         $contrasena = $_POST['contrasena'];
     
         $resultado = $this->modeloLogin->iniciarSesion($nombreUsuario, $contrasena);
-        print("<pre>".print_r($resultado,true)."</pre>");
+        // print("<pre>".print_r($resultado,true)."</pre>");
         if ($resultado !== false) {
             // Inicio de sesión exitoso, obtener los datos del usuario
             $datosUsuario = $resultado;
