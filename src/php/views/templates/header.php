@@ -8,6 +8,11 @@
 </head>
 <body>
 <nav>
+<div>
+      <form action="index.php?action=buscarPalabra&controller=palabra" method="POST">
+        <input type="text" id="busqueda" name="busqueda" placeholder="Buscar palabras...">
+      </form>
+    </div>
     <div>
       <h1><a href="index.php">Diccionario</a></h1>
     </div>
@@ -17,5 +22,7 @@
         <!-- <li><a href="#">Palabras</a></li> -->
         <li><a href="#">Cerrar Sesión</a></li>
       </ul>
+      
     </div>
+  
   </nav>

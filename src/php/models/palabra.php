@@ -139,4 +139,26 @@ public function aniadirTraduccionV($idPalabra){
     $stmt->execute();
     $stmt->close();
 }
+public function buscarPalabras( $palabra){
+    $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase,p.audio
+              FROM palabras p
+              LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
+              LEFT JOIN clase c ON p.idClase = c.id
+              WHERE p.palabra LIKE '%$palabra%'";
+
+    $resultado = $this->conexion->query($query); 
+    $palabras = array(); // Inicializamos el arreglo de palabras
+    while ($row = $resultado->fetch_assoc()) {
+        $palabras[] = $row;
+    }
+    
+    // Comprobar si el arreglo de palabras está vacío
+    if(empty($palabras)) {
+        $mensajeError='<h1>No hay palabras asociadas a esta clase que coincidan con la búsqueda</h1>';
+        return ['mensaje' => $mensajeError];
+    } else {
+        return $palabras; // Devolver el arreglo de palabras si hay palabras
+    }
+}
+
 }

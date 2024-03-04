@@ -74,9 +74,6 @@ class Controladorpalabra{
 
         
         }
-         
-        
-    
     public function guardarPalabra() {
       
         // Verificar si se ha enviado algún archivo de audio
@@ -218,4 +215,10 @@ class Controladorpalabra{
          $this->modeloPalabra->aniadirTraduccion($_GET['idPalabra']);
          header("Location: index.php?controller=palabra&action=rellenarEditar&idPalabra=".$_GET['idPalabra']."&idClase=".$_GET['idClase']);
     }
+    public function buscarPalabra(){
+        $this->view = 'busqueda';
+
+        return $this->modeloPalabra->buscarPalabras($_POST['busqueda']);
+    }
+    
 }
