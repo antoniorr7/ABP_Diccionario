@@ -40,21 +40,26 @@ class Palabra extends Conexion {
     }
     
     public function aniadirPalabra($datos) {
-
         // Insertar la palabra
-       $palabra = $datos['palabra'];
-       $audio = $datos['audio'];
-       $idClase = $datos['idClase'];
+        $palabra = $datos['palabra'];
+        $audio = ($datos['audio'] === '') ? 'NULL' : "'" . $datos['audio'] . "'";
+        $idClase = $datos['idClase'];
+        
+        // Si el audio es una cadena vacía, se asigna NULL sin comillas
+        if ($audio === "''") {
+            $audio = 'NULL';
+        }
+        
+        $query = "INSERT INTO palabras (idClase, palabra, audio) VALUES ('$idClase', '$palabra', $audio)";
        
-       $query = "INSERT INTO palabras (idClase, palabra, audio) VALUES ('$idClase', '$palabra', '$audio')";
-       
-       $this->conexion->query($query);
-       
-       // Obtener el ID de la palabra insertada
-       $idPalabra = $this->conexion->insert_id;
-   
-       return $idPalabra;
-   }
+        $this->conexion->query($query);
+        
+        // Obtener el ID de la palabra insertada
+        $idPalabra = $this->conexion->insert_id;
+    
+        return $idPalabra;
+    }
+    
    
    public function aniadirTraducciones($idPalabra, $datos) {
        
@@ -88,36 +93,42 @@ class Palabra extends Conexion {
         return $palabra; 
     }
     
-public function editarPalabra($datos){
-    $query = "UPDATE palabras SET palabra = ?";
-  
-    if (!empty($datos['audio'])) {
-        $query .= ", audio = ?";
-
-    }
-    $query .= " WHERE idPalabra = ?";
-  
-    $stmt = $this->conexion->prepare($query);
-    if (!empty($datos['audio'])) {
-        $stmt->bind_param("ssi", $datos['palabra'],$datos['audio'],$datos['idPalabra']);
+    public function editarPalabra($datos){
+        $query = "UPDATE palabras SET palabra = ?";
+        $audioValue = null;
+    
+        // Si el audio no está vacío, establece su valor
+        if (!empty($datos['audio'])) {
+            $query .= ", audio = ?";
+            $audioValue = $datos['audio'];
+        }
+    
+        $query .= " WHERE idPalabra = ?";
       
-    }else{ 
-        $stmt->bind_param("si", $datos['palabra'],$datos['idPalabra']);
-    }
-    $stmt->execute();
-    $stmt->close();
-    $query = "UPDATE traducciones SET significados = ? WHERE idTraduccion = ?";
-    $stmt = $this->conexion->prepare($query);
-    foreach ($datos['idTraduccion'] as $id => $idTraduccion) {
-        $stmt->bind_param("si", $datos['traduccion'][$id], $idTraduccion);
+        $stmt = $this->conexion->prepare($query);
+    
+        // Si hay audio, enlaza el parámetro de audio, de lo contrario, solo enlaza la palabra y el idPalabra
+        if (!empty($datos['audio'])) {
+            $stmt->bind_param("ssi", $datos['palabra'], $audioValue, $datos['idPalabra']);
+        } else { 
+            $stmt->bind_param("si", $datos['palabra'], $datos['idPalabra']);
+        }
+    
         $stmt->execute();
+        $stmt->close();
+    
+        // Actualiza las traducciones
+        $query = "UPDATE traducciones SET significados = ? WHERE idTraduccion = ?";
+        $stmt = $this->conexion->prepare($query);
+    
+        foreach ($datos['idTraduccion'] as $id => $idTraduccion) {
+            $stmt->bind_param("si", $datos['traduccion'][$id], $idTraduccion);
+            $stmt->execute();
+        }
+    
+        $stmt->close();
     }
-    $stmt->close();
-}
-
-
-
-
+    
 public function eliminarTraduccion($idPalabra){
     $query = "DELETE FROM traducciones WHERE idPalabra = ?";
     $stmt = $this->conexion->prepare($query);
@@ -167,5 +178,4 @@ public function buscarPalabras( $palabra){
         return $palabras; // Devolver el arreglo de palabras si hay palabras
     }
 }
-
 }

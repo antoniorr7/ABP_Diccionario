@@ -85,11 +85,17 @@ class Controladorpalabra{
         }
     public function guardarPalabra() {
         
-        // Verificar si se ha enviado algún archivo de audio
+       // Comprobar si se ha enviado un archivo de audio
         if(isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
+            $max_blob_size = 65535; // Establece el tamaño máximo permitido en bytes
+            if ($_FILES['audio']['size'] > $max_blob_size) {
+                $this->view = 'error';
+                return "El archivo de audio supera el tamaño máximo permitido";
+            }
+            
             $audio_tmp_name = $_FILES['audio']['tmp_name'];
             $audio_name = $_FILES['audio']['name'];
-            
+                    
             // Verificar si el archivo es de tipo MP3
             if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) === 'mp3') {
                 $audio_data = file_get_contents($audio_tmp_name);
@@ -171,9 +177,14 @@ class Controladorpalabra{
 
         // Comprobar si se ha enviado un archivo de audio
         if(isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
+            $max_blob_size = 65535; // Establece el tamaño máximo permitido en bytes
+            if ($_FILES['audio']['size'] > $max_blob_size) {
+                $this->view = 'error';
+                return "El archivo de audio supera el tamaño máximo permitido";
+            }
+            
             $audio_tmp_name = $_FILES['audio']['tmp_name'];
             $audio_name = $_FILES['audio']['name'];
-            
             // Verificar si el nombre del archivo termina con ".mp3"
             if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) === 'mp3' ) {
                 $audio_data = file_get_contents($audio_tmp_name);
