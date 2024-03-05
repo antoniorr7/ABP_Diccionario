@@ -3,16 +3,23 @@ class Controladorclase{
     public $pagina;
     public $view;
     private $modeloClase;
+    private $objLogin;
     public function __construct() {
         require_once 'models/clase.php';
+        require_once 'login.php';
         $this->view = '';
         $this->modeloClase = new Clase();
+        $this->objLogin = new Controladorlogin();
+        $this->objLogin->comprobarSesion();
     }
     public function inicio() {
+       
         $this->view = 'inicio';
+     
     }
 
     public function listarClases() {
+       
         $this->view = 'clase';
         return $this->modeloClase->listar(); 
     }
@@ -21,10 +28,11 @@ class Controladorclase{
         return $this->modeloClase->listarClase($id); 
     }
     public function formularioClase() {
+       
         $this->view = 'aniadirclase';
     }
     public function aniadirClases(){
-      
+     
         if (isset($_POST['nombreClase']) && !empty($_POST['nombreClase'])) {
          
             $this->modeloClase->aniadir($_POST['nombreClase']);

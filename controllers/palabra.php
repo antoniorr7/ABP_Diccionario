@@ -45,7 +45,7 @@ class Controladorpalabra{
         }
         echo '</div>';
         $html = ob_get_clean();
-        require_once '../php/library/dompdf/autoload.inc.php';
+        require_once 'library/dompdf/autoload.inc.php';
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
         $options->set(['isRemoteEnabled' => true]);

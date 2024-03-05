@@ -4,6 +4,7 @@ require_once 'models/conexion.php';
 class Login extends Conexion {
     public function __construct() { 
         parent::__construct();
+       $this->instalacion();
     }
 
     public function iniciarSesion($nombreUsuario, $contrasena) {
@@ -63,6 +64,18 @@ class Login extends Conexion {
             }
         } 
     }
+    public function instalacion() {
+        $query = "SELECT COUNT(*) as total FROM usuarios";
+        $resultado = $this->conexion->query($query);
+    
+        if ($resultado && $resultado->fetch_assoc()['total'] > 0) {
+            return; // Ya existen usuarios en la base de datos, no es necesario crear el admin
+        } else {
+            // No hay usuarios en la base de datos, creamos el admin
+            $this->crearUsuario(ADMIN, CONTRASENA);
+        }
+    }
+    
     
     public function crearUsuario($nombre, $contrasena) {
         $nombre = $this->conexion->real_escape_string($nombre);

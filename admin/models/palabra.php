@@ -118,7 +118,14 @@ public function editarPalabra($datos){
 
 
 
-public function eliminarTraduccion($idTraduccion){
+public function eliminarTraduccion($idPalabra){
+    $query = "DELETE FROM traducciones WHERE idPalabra = ?";
+    $stmt = $this->conexion->prepare($query);
+    $stmt->bind_param("i", $idPalabra);
+    $stmt->execute();
+    $stmt->close();
+}
+public function eliminarTraduccionEditar($idTraduccion){
     $query = "DELETE FROM traducciones WHERE idTraduccion = ?";
     $stmt = $this->conexion->prepare($query);
     $stmt->bind_param("i", $idTraduccion);

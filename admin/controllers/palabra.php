@@ -4,17 +4,24 @@ class Controladorpalabra{
     public $pagina;
     public $view;
     private $modeloPalabra;
+    private $objLogin;
     public function __construct() {
         require_once 'models/palabra.php';
+        require_once 'login.php';
         $this->view = '';
         $this->modeloPalabra = new Palabra();
+        $this->objLogin = new Controladorlogin();
+        $this->objLogin->comprobarSesion();
+ 
     }
   public function listarPalabras(){
+        
         $this->view = 'palabra';
         
         return $this->modeloPalabra->listarPalabras($_GET['idClase']);
     }
     public function PDF() {
+        
         $datos = $this->modeloPalabra->listarPalabras($_GET['idClase']);
         if (empty($datos[0]['significados'])) {
             $this->view= 'error';
@@ -45,7 +52,7 @@ class Controladorpalabra{
         }
         echo '</div>';
         $html = ob_get_clean();
-        require_once '../php/library/dompdf/autoload.inc.php';
+        require_once 'library/dompdf/autoload.inc.php';
         $dompdf = new Dompdf();
         $options = $dompdf->getOptions();
         $options->set(['isRemoteEnabled' => true]);
@@ -57,10 +64,12 @@ class Controladorpalabra{
     }
  
     public function aniadirPalabra(){
+        
         $this->view = 'aniadirpalabra';
        
     }
     public function aniadirTraducciones(){
+      
         if($_POST['numTraducciones'] > 0 && !empty($_POST['palabra']) && is_numeric($_POST['numTraducciones'])) {
             $this->view = 'aniadirtraducciones';
             
@@ -75,7 +84,7 @@ class Controladorpalabra{
         
         }
     public function guardarPalabra() {
-      
+        
         // Verificar si se ha enviado algún archivo de audio
         if(isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
             $audio_tmp_name = $_FILES['audio']['tmp_name'];
@@ -94,7 +103,7 @@ class Controladorpalabra{
             }
         } else {
             // Si no se proporcionó ningún archivo de audio, establecer el valor del campo de audio como null
-            $_POST['audio'] = null;
+            $_POST['audio'] = NULL;
         }
         // Verificar si hay traducciones vacías
     $numTraducciones = $_POST['numTraducciones'];
@@ -128,11 +137,13 @@ class Controladorpalabra{
     
     
     public function eliminarPalabra(){
+        
         $this->view = 'eliminarpalabra';
         $idClase=$this->modeloPalabra->obtenerIdClase($_GET['idPalabra']);
             if (isset($_POST['confirmarBorrado']) && $_POST['confirmarBorrado'] === 'si') {
              
                     $this->modeloPalabra->eliminarPalabra($_GET['idPalabra']);
+                    $this->modeloPalabra->eliminarTraduccion($_GET['idPalabra']);
                     header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
 
             }
@@ -142,15 +153,16 @@ class Controladorpalabra{
 
     }
     public function rellenarEditar(){
+        
         $this->view = 'editarpalabra';
       
         return $this->modeloPalabra->obtenerPalabra($_GET['idPalabra']);
 
     }
     public function editarPalabra() {
-      
+        
         $idClase = $this->modeloPalabra->obtenerIdClase($_GET['idPalabra']);
-        $audio_base64 = "";
+        $audio_base64 = null;
      // Comprobar si la palabra está vacía
      if(empty(trim($_POST['palabra']))) {
         $this->view = 'error';
@@ -204,18 +216,21 @@ class Controladorpalabra{
     
     
     public function eliminarTraduccion(){
+        
         $this->view = 'editarpalabra';
         
-         $this->modeloPalabra->eliminarTraduccion($_GET['idTraduccion']);
+         $this->modeloPalabra->eliminarTraduccionEditar($_GET['idTraduccion']);
          header("Location: index.php?controller=palabra&action=rellenarEditar&idPalabra=".$_GET['idPalabra']."&idClase=".$_GET['idClase']);
     }
    public function aniadirTraduccion(){
+    
         $this->view = 'editarpalabra';
 
          $this->modeloPalabra->aniadirTraduccion($_GET['idPalabra']);
          header("Location: index.php?controller=palabra&action=rellenarEditar&idPalabra=".$_GET['idPalabra']."&idClase=".$_GET['idClase']);
     }
     public function buscarPalabra(){
+        
         $this->view = 'busqueda';
 
         return $this->modeloPalabra->buscarPalabras($_POST['busqueda']);

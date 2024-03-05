@@ -16,9 +16,7 @@
 
         <input type="submit" value="Registrate">
     </form>
-    <div class="form-footer">
-        <p>¿Tienes una cuenta? <a href="index.php?controller=login&action=mostrarLogin" class="register-link">Inicia Sesión aquí</a></p>
-    </div>
+   
 </div>
 
 </body>

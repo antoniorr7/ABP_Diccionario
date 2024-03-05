@@ -17,11 +17,12 @@ class Controladorlogin{
         // Verificar si nombre de usuario o contraseña están vacíos
         if (empty($_POST['nombreUsuario']) || empty($_POST['contrasena'])) {
             // Nombre de usuario o contraseña vacíos, redirigir a login
-            $this->view = 'error';
+         header('Location: index.php');
             return;
         }
-    
+   
         $nombreUsuario = $_POST['nombreUsuario'];
+        $_SESSION['usuario']=$nombreUsuario;
         $contrasena = $_POST['contrasena'];
     
         $resultado = $this->modeloLogin->iniciarSesion($nombreUsuario, $contrasena);
@@ -33,8 +34,8 @@ class Controladorlogin{
             // Verificar la contraseña utilizando password_verify
             if (password_verify($contrasena, $datosUsuario['contrasena'])) {
 
-                $this->view='inicio';
-                echo "Inicio de sesión exitoso.";
+                header('Location: index.php?controller=clase&action=inicio');
+              
             } 
         }else {
             
@@ -43,23 +44,15 @@ class Controladorlogin{
 
         }
     }
-       
-    public function crearAdmin() {
-        if ($_SERVER["REQUEST_METHOD"] === "POST") {
-            $nombre = $_POST["nombreUsuario"];
-            $correo = $_POST["correo"];
-            $contrasena = $_POST["contrasena"];
-
-            // Llama al método para crear un administrador
-            $resultado = $this->modeloLogin->crearAdmin($nombre, $correo, $contrasena);
-
-            if ($resultado) {
-                echo "Administrador creado correctamente.";
-            } else {
-                echo "Error al crear el administrador.";
-            }
-        }
+    public function cerrarSesion() {
+        session_start();
+        $_SESSION = array(); // Limpiar todas las variables de sesión
+        session_destroy(); // Destruir la sesión
+        header('Location: index.php');
+        exit(); // Detener la ejecución del script después de la redirección
     }
+    
+
     public function mostrarRegistro() {
         $this->view = 'registro';
     }
@@ -76,6 +69,12 @@ class Controladorlogin{
             } else {
                 return "Error al crear el Usuario.";
             }
+        }
+    }
+    public function comprobarSesion() {
+        session_start();
+        if (!isset($_SESSION['usuario'])) {
+            header('Location: index.php');
         }
     }
     

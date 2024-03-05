@@ -14,13 +14,17 @@
       </form>
     </div>
     <div>
-      <h1><a href="index.php">Diccionario</a></h1>
+      <h1><a href="index.php?action=inicio&controller=clase">Diccionario</a></h1>
     </div>
     <div>
       <ul>
+      
         <li><a href="index.php?action=listarClases&controller=clase">Clases</a></li>
         <!-- <li><a href="#">Palabras</a></li> -->
-        <li><a href="#">Cerrar Sesión</a></li>
+        <li><a href="index.php?action=cerrarSesion&controller=login">Cerrar Sesión</a></li>
+      
+        <li><h3>¡Bienvenido <?php echo $_SESSION['usuario']?>!</h3></li>
+        <li><a href="index.php?controller=login&action=mostrarRegistro" class="register-link">Regístrar nuevo admin</a></li>
       </ul>
       
     </div>
