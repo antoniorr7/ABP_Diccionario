@@ -78,11 +78,14 @@ class Controladorpalabra{
         }else{
             $this->view='aniadirpalabra';
             
-            return 'error'; 
+            return 'Error formato de palabra o traducciones.'; 
         }
-
-        
+        if(strlen($_POST['palabra'])>50){
+            $this->view='aniadirpalabra';
+            
+            return 'Error formato de palabra,demasiado larga.'; 
         }
+    }
     public function guardarPalabra() {
         
        // Comprobar si se ha enviado un archivo de audio
@@ -111,22 +114,37 @@ class Controladorpalabra{
             // Si no se proporcionó ningún archivo de audio, establecer el valor del campo de audio como null
             $_POST['audio'] = NULL;
         }
-        // Verificar si hay traducciones vacías
-    $numTraducciones = $_POST['numTraducciones'];
-    $traducciones = array();
-    for ($i = 1; $i <= $numTraducciones; $i++) {
-        $traduccionKey = 'traduccion'.$i;
-        $traducciones[] = $_POST[$traduccionKey];
+    // Verificar si la primera traducción está vacía
+    if (empty($_POST['traduccion1'])) {
+        $this->view = 'aniadirtraducciones';
+        return "La primera traducción no puede estar vacía";
     }
-    
-    foreach ($traducciones as $traduccion) {
-        if (empty($traduccion)) {
-            $this->view= 'aniadirtraducciones';
-            return "Una o más traducciones están vacías";
+ // Verificar la longitud de las traducciones
+ foreach ($_POST as $key => $value) {
+    if (strpos($key, 'traduccion') === 0 && strlen($value) > 100) {
+        $this->view = 'aniadirtraducciones';
+        return "La longitud de las traducciones no puede exceder los 100 caracteres.";
+    }
+}
+    // Eliminar traducciones vacías (excepto la primera)
+    $numTraducciones = $_POST['numTraducciones'];
+    for ($i = 2; $i <= $numTraducciones; $i++) {
+        $traduccionKey = 'traduccion'.$i;
+        if (empty($_POST[$traduccionKey])) {
+            unset($_POST[$traduccionKey]);
+            $_POST['numTraducciones']--; // Disminuir el contador de traducciones
         }
     }
         // Llamar al método aniadirPalabra para insertar la palabra y obtener el ID
         $idPalabra = $this->modeloPalabra->aniadirPalabra($_POST);
+
+        if ($idPalabra == null) {
+            $this->view = 'error';
+            return 'Palabra repetida';
+        }
+        
+        
+
         
         // Llamar al método aniadirTraducciones para insertar las traducciones
         if ($idPalabra) {
@@ -135,10 +153,10 @@ class Controladorpalabra{
         // $this->view = 'palabra';
         // return $this->modeloPalabra->listarPalabras($_POST['idClase']);
         //si uso header se rompe todo lo que cojo en la vista con get
-       
+        //print("<pre>".print_r($_POST,true)."</pre>");
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$_POST['idClase']);
         exit(); 
-    }
+}
     
     
     
@@ -174,6 +192,11 @@ class Controladorpalabra{
         $this->view = 'error';
         return "La palabra no puede estar vacía.";
     }
+    // Verificar longitud de la palabra
+    if (strlen($_POST['palabra']) > 50) {
+        $this->view = 'error';
+        return "La palabra no puede tener más de 50 caracteres.";
+    }
 
         // Comprobar si se ha enviado un archivo de audio
         if(isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
@@ -195,33 +218,45 @@ class Controladorpalabra{
             }
         }
         
-       
-     // Bandera para verificar si al menos una traducción no está vacía
-     $hayTraduccion = false;
-    
-     // Comprobar si hay traducciones vacías
-     foreach($_POST['traduccion'] as $index => $traduccion) {
-         if(empty(trim($traduccion))) {
-             // Eliminar la traducción correspondiente de la base de datos
-             $this->modeloPalabra->eliminarTraduccion($_POST['idTraduccion'][$index]);
-         } else {
-             // Se encontró al menos una traducción no vacía
-             $hayTraduccion = true;
-         }
-     }
-     
-     // Si no hay al menos una traducción no vacía, devuelve un error
-     if(!$hayTraduccion) {
-         $this->view = 'error';
-         return "Debe haber al menos una traducción no vacía.";
-     }
-    
+            // Verificar si la primera traducción está vacía
+        if(empty(trim($_POST['traduccion'][0]))) {
+            // Cambiar de vista y retornar error
+            $this->view = 'error';
+            return "La primera traducción no puede estar vacía.";
+        }
+
+        // Bandera para verificar si al menos una traducción no está vacía
+        $hayTraduccion = false;
+
+        // Comprobar si hay traducciones vacías, excluyendo la primera
+        for ($i = 1; $i < count($_POST['traduccion']); $i++) {
+            if (empty(trim($_POST['traduccion'][$i]))) {
+                // Eliminar la traducción correspondiente de la base de datos
+                $this->modeloPalabra->eliminarTraduccionEditar($_POST['idTraduccion'][$i]);
+            } else {
+                // Se encontró al menos una traducción no vacía
+                $hayTraduccion = true;
+            }
+        }
+ // Verificar la longitud de las traducciones
+ foreach ($_POST['traduccion'] as $traduccion) {
+    if (strlen($traduccion) > 100) {
+        $this->view = 'error';
+        return "Las traducciones no pueden tener más de 100 caracteres.";
+    }
+}
+
+
         $_POST['audio'] = $audio_base64;
-        $this->modeloPalabra->editarPalabra($_POST);
+        $resultado=$this->modeloPalabra->editarPalabra($_POST);
+        if($resultado==null){
+            $this->view='error';
+            return 'Palabra repetida';
+        }
         
         header("Location: index.php?controller=palabra&action=listarPalabras&idClase=".$idClase);
         exit(); 
-    }
+}
     
     
     
@@ -239,6 +274,13 @@ class Controladorpalabra{
 
          $this->modeloPalabra->aniadirTraduccion($_GET['idPalabra']);
          header("Location: index.php?controller=palabra&action=rellenarEditar&idPalabra=".$_GET['idPalabra']."&idClase=".$_GET['idClase']);
+    }
+    public function eliminarAudio(){
+
+        $this->view = 'editarpalabra';
+
+        $this->modeloPalabra->eliminarAudio($_GET['idPalabra']);
+        header("Location: index.php?controller=palabra&action=rellenarEditar&idPalabra=".$_GET['idPalabra']."&idClase=".$_GET['idClase']);
     }
     public function buscarPalabra(){
         

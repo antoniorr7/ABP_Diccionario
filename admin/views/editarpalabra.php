@@ -8,6 +8,9 @@
           <input type="text" id="palabra" name="palabra" value="<?php echo $data['palabra']; ?>">
         </div>
         <label for="audio">Archivo de Audio:</label>
+        <a id=eliminar href="index.php?action=eliminarAudio&controller=palabra&idPalabra=<?php echo $data['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>"><img src="../img/borrar.png" alt="eliminar"></a>
+
+    
         <?php
           if(isset($data['audio']) && !empty($data['audio'])) {
             $audio_decoded = base64_decode($data['audio']);
@@ -39,3 +42,4 @@
   </form>
   <a  href="index.php?action=listarPalabras&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>
+<?php isset($retornado['mensaje']);?>

@@ -32,18 +32,29 @@ class Controladorclase{
         $this->view = 'aniadirclase';
     }
     public function aniadirClases(){
-     
         if (isset($_POST['nombreClase']) && !empty($_POST['nombreClase'])) {
-         
-            $this->modeloClase->aniadir($_POST['nombreClase']);
-    
+            // Verificar longitud del nombre de la clase
+            $nombreClase = $_POST['nombreClase'];
+            if (strlen($nombreClase) > 50) {
+                $this->view='error';
+                return "El nombre de la clase no puede tener más de 50 caracteres.";
+            }
+            
+      
+
+          
+            if ($this->modeloClase->aniadir($nombreClase)==false) {
+               $this->view='error';
+               return 'clase duplicada';
+            } 
             header('Location: index.php?action=listarClases&controller=clase');
-        }else{
+        } else {
             $this->view='error';
             return "El nombre de la clase no puede estar vacío.";
         }
         
     }
+    
     public function eliminarClase(){
         $this->view = 'eliminarclase';
        
@@ -72,12 +83,21 @@ class Controladorclase{
             return "El nombre de la clase no puede estar vacío.";
         }
         
-        // Realizar la edición solo si el nombre de la clase no está vacío
-        $this->modeloClase->editar($_POST['id'], $_POST['nombreClase']);
-    
+        // Verificar longitud del nombre de la clase
+        $nombreClase = $_POST['nombreClase'];
+        if (strlen($nombreClase) > 50) {
+            $this->view = 'error';
+            return "El nombre de la clase no puede tener más de 50 caracteres.";
+        }
+        
+        // Realizar la edición solo si el nombre de la clase no está vacío y no excede la longitud máxima
+        if ($this->modeloClase->editar($_POST['id'], $nombreClase)==false) {
+            $this->view='error';
+            return 'clase ya existente';
+        }
+ 
         header('Location: index.php?action=listarClases&controller=clase');
     }
-    
     
 }
 ?>

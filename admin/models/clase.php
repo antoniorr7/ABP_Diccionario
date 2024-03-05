@@ -43,28 +43,31 @@ class Clase extends Conexion {
     }
 
     public function aniadir () {
-        
-        $query = "INSERT INTO clase (nombreClase) VALUES (?)";
-        $stmt = $this->conexion->prepare($query);
-
-        // Verificar si la preparación de la consulta fue exitosa
-        if ($stmt === false) {
-            return 'Error al preparar la consulta';
-        }
-
-        // Vincular parámetros
-        $stmt->bind_param("s", $_POST['nombreClase']);
-
-        // Ejecutar la consulta preparada
-        $resultado = $stmt->execute();
-
-     
-        if ($resultado === false) {
-            return 'Error al insertar en la base de datos';
-        } else {
-            return 'Clase añadida';
+        try {
+            $query = "INSERT INTO clase (nombreClase) VALUES (?)";
+            $stmt = $this->conexion->prepare($query);
+    
+            // Verificar si la preparación de la consulta fue exitosa
+            if ($stmt === false) {
+                throw new Exception('Error al preparar la consulta');
+            }
+    
+            // Vincular parámetros
+            $stmt->bind_param("s", $_POST['nombreClase']);
+    
+            // Ejecutar la consulta preparada
+            $resultado = $stmt->execute();
+    
+            if ($resultado === false) {
+                throw new Exception('Error al insertar en la base de datos');
+            } else {
+                return 'Clase añadida';
+            }
+        } catch (Exception $e) {
+            return false;
         }
     }
+    
     public function borrar ($id) {
 
         $query = "DELETE FROM clase WHERE id = ?";
@@ -82,29 +85,35 @@ class Clase extends Conexion {
         $resultado = $stmt->execute();
         
     } 
-    //editar
-    public function editar($id, $nombre) {
-        // Preparar la consulta con parámetros
-        $query = "UPDATE clase SET nombreClase = ? WHERE id = ?";
-        $stmt = $this->conexion->prepare($query);
-
-        // Vincular parámetros
-        $stmt->bind_param("si", $nombre, $id);
-
-        // Ejecutar la consulta
-        $stmt->execute();
     
-        // Verificar si se ejecutó correctamente
-        if ($stmt->affected_rows > 0) {
-            // Si se modificó al menos una fila, retorna verdadero
-            return true;
-        } else {
-            // Si no se modificó ninguna fila, retorna falso
+    public function editar($id, $nombre) {
+        try {
+            // Preparar la consulta con parámetros
+            $query = "UPDATE clase SET nombreClase = ? WHERE id = ?";
+            $stmt = $this->conexion->prepare($query);
+    
+            // Vincular parámetros
+            $stmt->bind_param("si", $nombre, $id);
+    
+            // Ejecutar la consulta
+            $stmt->execute();
+        
+            // Verificar si se ejecutó correctamente
+            if ($stmt->affected_rows > 0) {
+                // Si se modificó al menos una fila, retorna verdadero
+                return true;
+            } else {
+                // Si no se modificó ninguna fila, retorna falso
+                return false;
+            }
+        
+            // Cerrar la sentencia preparada
+            $stmt->close();
+        } catch (Exception $e) {
+         
             return false;
         }
-    
-        // Cerrar la sentencia preparada
-        $stmt->close();
     }
+    
 }
 ?>
