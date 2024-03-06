@@ -42,4 +42,3 @@
   </form>
   <a  href="index.php?action=listarPalabras&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>"><img id='atras' src="../img/flecha-izquierda.png" alt=""></a>
 </div>
-<?php isset($retornado['mensaje']);?>
