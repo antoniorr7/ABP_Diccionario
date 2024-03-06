@@ -29,40 +29,33 @@ class Login extends Conexion {
             
             // Verificar la contraseña utilizando password_verify
             if (password_verify($contrasena, $usuario['contrasena'])) {
-              
+                // Contraseña válida, se devuelve el usuario completo
                 return $usuario;
             } else {
-
+                // Contraseña inválida
                 return false;
             }
         } else {
-            
+            // Usuario no encontrado
             return false;
         }
     }
     
     
+    
     public function crearAdmin($nombre, $contrasena) {
         $nombre = $this->conexion->real_escape_string($nombre);
-    
+
         // Encriptar la contraseña antes de almacenarla
-        $contrasenia_hash = password_hash($contrasenia, PASSWORD_DEFAULT, ['cost' => 12]);
-    
-        // Verificar si ya existe algún usuario en la tabla usuarios
-        $query = "SELECT COUNT(*) as total FROM usuarios";
+        $contrasenia_hash = password_hash($contrasena, PASSWORD_DEFAULT, ['cost' => 12]);
+        $query = "INSERT INTO usuarios (nombreUsuario, contrasena, esAdmin) VALUES ('$nombre', '$contrasenia_hash', 1)";
         $resultado = $this->conexion->query($query);
-        
-        if ($resultado && $resultado->fetch_assoc()['total'] == 0) {
-            // Si no hay usuarios, crear el usuario admin
-            $query = "INSERT INTO usuarios (nombreUsuario, contrasena, esAdmin) VALUES ('$nombre', '$contrasenaEncriptada', 1)";
-            $resultado = $this->conexion->query($query);
     
-            if ($resultado) {
-                return true;
-            } else {
-                return false;
-            }
-        } 
+        if ($resultado) {
+            return true;
+        } else {
+            return false;
+        }
     }
     public function instalacion() {
         $query = "SELECT COUNT(*) as total FROM usuarios";
@@ -72,7 +65,7 @@ class Login extends Conexion {
             return; // Ya existen usuarios en la base de datos, no es necesario crear el admin
         } else {
             // No hay usuarios en la base de datos, creamos el admin
-            $this->crearUsuario(ADMIN, CONTRASENA);
+            $this->crearAdmin(ADMIN, CONTRASENA);
         }
     }
     

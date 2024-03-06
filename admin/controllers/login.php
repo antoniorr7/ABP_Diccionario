@@ -24,8 +24,12 @@ class Controladorlogin{
         $nombreUsuario = $_POST['nombreUsuario'];
         $_SESSION['usuario']=$nombreUsuario;
         $contrasena = $_POST['contrasena'];
-    
+     
         $resultado = $this->modeloLogin->iniciarSesion($nombreUsuario, $contrasena);
+       
+           
+            
+                
         // print("<pre>".print_r($resultado,true)."</pre>");
         if ($resultado !== false) {
             // Inicio de sesión exitoso, obtener los datos del usuario
@@ -33,7 +37,7 @@ class Controladorlogin{
             
             // Verificar la contraseña utilizando password_verify
             if (password_verify($contrasena, $datosUsuario['contrasena'])) {
-
+                $_SESSION['idUsuario']=$resultado['idUsuario'];
                 header('Location: index.php?controller=clase&action=inicio');
               
             } 

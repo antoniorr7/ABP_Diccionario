@@ -31,6 +31,15 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+ALTER TABLE `clase`
+ADD COLUMN `idUsuario` int(11) DEFAULT NULL,
+ADD CONSTRAINT `fk_usuario_clase`
+FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`)
+ON DELETE CASCADE;
+ALTER TABLE `clase`
+ADD CONSTRAINT `nombreClase_idUsuario_unique`
+UNIQUE (`nombreClase`, `idUsuario`);
+
 
 
 

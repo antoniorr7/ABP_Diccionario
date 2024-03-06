@@ -6,23 +6,32 @@ class Clase extends Conexion {
         parent::__construct();
     }
 
-    public function listar() {
-        $query = "SELECT * FROM clase";
-        $resultado = $this->conexion->query($query); 
+public function listar() {
+    $query = "SELECT * FROM clase where idUsuario = ?";
+    $stmt = $this->conexion->prepare($query);
+    $idUsuario = $_SESSION['idUsuario'];
+    $stmt->bind_param("i", $idUsuario);
+   
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
-        if ($resultado === false) {
-            return 'Error al consultar la base de datos';
+    if ($resultado === false) {
+        return 'Error al consultar la base de datos';
+    } else {
+        $clases = array(); // Inicializar el array de clases
+
+        if ($resultado->num_rows === 0) {
+            return null;
         } else {
-            if ($resultado->num_rows === 0) {
-                return null;
-            } else {
-                foreach ($resultado as $fila) {
-                    $clases[] = $fila;
-                }
+            // Recorrer el resultado y almacenar las filas en el array de clases
+            while ($fila = $resultado->fetch_assoc()) {
+                $clases[] = $fila;
             }
-            return $clases;
         }
+        return $clases;
     }
+}
+
     public function listarClase($id) {
         $query = "SELECT nombreClase FROM clase where id = $id";
         $resultado = $this->conexion->query($query); 
@@ -42,9 +51,9 @@ class Clase extends Conexion {
         }
     }
 
-    public function aniadir () {
+    public function aniadir ($nombre) {
         try {
-            $query = "INSERT INTO clase (nombreClase) VALUES (?)";
+            $query = "INSERT INTO clase (nombreClase,idUsuario) VALUES (?,?)";
             $stmt = $this->conexion->prepare($query);
     
             // Verificar si la preparación de la consulta fue exitosa
@@ -53,7 +62,7 @@ class Clase extends Conexion {
             }
     
             // Vincular parámetros
-            $stmt->bind_param("s", $_POST['nombreClase']);
+            $stmt->bind_param("si", $nombre,$_SESSION['idUsuario']);
     
             // Ejecutar la consulta preparada
             $resultado = $stmt->execute();
