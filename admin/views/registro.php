@@ -15,6 +15,7 @@
     <input type="password" name="contrasena" placeholder="Contraseña" required>
 
         <input type="submit" value="Registrate">
+        <?php echo ($retornado ?? '') ? "<span style='color: red;'>".$retornado."</span>" : ''; ?>
     </form>
    
 </div>
