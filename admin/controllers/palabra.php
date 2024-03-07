@@ -198,24 +198,29 @@ class Controladorpalabra{
         return "La palabra no puede tener más de 50 caracteres.";
     }
 
-        // Comprobar si se ha enviado un archivo de audio
-        if(isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
-            $max_blob_size = 65535; // Establece el tamaño máximo permitido en bytes
-            if ($_FILES['audio']['size'] > $max_blob_size) {
-                $this->view = 'error';
-                return "El archivo de audio supera el tamaño máximo permitido";
-            }
-            
-            $audio_tmp_name = $_FILES['audio']['tmp_name'];
-            $audio_name = $_FILES['audio']['name'];
-            // Verificar si el nombre del archivo termina con ".mp3"
-            if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) === 'mp3' ) {
-                $audio_data = file_get_contents($audio_tmp_name);
-                $audio_base64 = base64_encode($audio_data);
-            } else {
-                $this->view='error';
-                return "El archivo de audio debe ser un archivo de audio .mp3";
-            }
+            // Comprobar si se ha enviado un archivo de audio
+            if(isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
+                if (isset($_FILES['audio']) && $_FILES['audio']['size'] > 0) {
+                    $audio_tmp_name = $_FILES['audio']['tmp_name'];
+                    $audio_name = $_FILES['audio']['name'];
+                
+                    // Verificar si el nombre del archivo termina con ".mp3"
+                    if (strtolower(pathinfo($audio_name, PATHINFO_EXTENSION)) !== 'mp3') {
+                        $this->view = 'error';
+                        return "El archivo de audio debe ser un archivo de audio .mp3";
+                    }
+                
+                    // Verificar el tamaño del archivo
+                    $max_blob_size = 65535; // bytes max
+                    if ($_FILES['audio']['size'] > $max_blob_size) {
+                        $this->view = 'error';
+                        return "El archivo de audio supera el tamaño máximo permitido";
+                    }
+                
+                    // Si todo está bien, obtenemos el contenido del archivo de audio
+                    $audio_data = file_get_contents($audio_tmp_name);
+                    $audio_base64 = base64_encode($audio_data);
+                }
         }
         
             // Verificar si la primera traducción está vacía
