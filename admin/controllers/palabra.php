@@ -111,7 +111,7 @@ class Controladorpalabra{
                 return "El archivo de audio debe ser un archivo de audio .mp3";
             }
         } else {
-            // Si no se proporcionó ningún archivo de audio, establecer el valor del campo de audio como null
+            // Si no se proporcionó ningún archivo de audio, campo de audio como null
             $_POST['audio'] = NULL;
         }
     // Verificar si la primera traducción está vacía
@@ -126,15 +126,24 @@ class Controladorpalabra{
         return "La longitud de las traducciones no puede exceder los 100 caracteres.";
     }
 }
-    // Eliminar traducciones vacías (excepto la primera)
-    $numTraducciones = $_POST['numTraducciones'];
-    for ($i = 2; $i <= $numTraducciones; $i++) {
-        $traduccionKey = 'traduccion'.$i;
-        if (empty($_POST[$traduccionKey])) {
-            unset($_POST[$traduccionKey]);
-            $_POST['numTraducciones']--; // Disminuir el contador de traducciones
-        }
-    }
+       // Eliminar traducciones vacías (excepto la primera)
+       $numTraducciones = $_POST['numTraducciones'];
+       $traduccionesNoVacias = [];
+       $traduccionesNoVacias[] = $_POST['traduccion1']; // Añadir la primera traducción no vacía
+       for ($i = 2; $i <= $numTraducciones; $i++) {
+           $traduccionKey = 'traduccion'.$i;
+           if (!empty($_POST[$traduccionKey])) {
+               $traduccionesNoVacias[] = $_POST[$traduccionKey];
+           }
+       }
+       // Actualizar el número de traducciones
+       $_POST['numTraducciones'] = count($traduccionesNoVacias);
+   
+       // Reasignar las traducciones no vacías al array POST
+       for ($i = 1; $i <= $_POST['numTraducciones']; $i++) {
+           $_POST['traduccion'.$i] = $traduccionesNoVacias[$i-1];// Menos 1 porque el array empieza en 0
+       }
+   
         // Llamar al método aniadirPalabra para insertar la palabra y obtener el ID
         $idPalabra = $this->modeloPalabra->aniadirPalabra($_POST);
 
