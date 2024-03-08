@@ -92,7 +92,29 @@ class Controladorlogin
             }
         }
     }
+    public function crearAdmin()
+    {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $nombre = $_POST["nombreUsuario"];
+            $contrasena = $_POST["contrasena"];
 
+            // Validar longitud máxima de usuario y contraseña
+            if (strlen($nombre) > 50 || strlen($contrasena) > 50) {
+                // Si la longitud excede, mostrar un mensaje de error
+                $this->view = 'registro';
+                return '<p>El nombre de usuario y la contraseña no pueden exceder los 50 caracteres.</p>';
+            }
+
+            $resultado = $this->modeloLogin->crearAdmin($nombre, $contrasena);
+
+            if ($resultado == true) {
+                $this->view = 'login';
+            } else {
+                $this->view = 'registro';
+                return '<p>Error al crear el Usuario.</p>';
+            }
+        }
+    }
     public function comprobarSesion()
     {
         session_start();

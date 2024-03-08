@@ -23,7 +23,7 @@
         <!-- <li><a href="#">Palabras</a></li> -->
         <li><a href="index.php?action=cerrarSesion&controller=login">Cerrar Sesión</a></li>
       
-        <li><h3>¡Bienvenido <?php echo $_SESSION['usuario']?>!</h3></li>
+        <li><h3>¡Bienvenid@ <?php echo $_SESSION['usuario']?>!</h3></li>
         <li><a href="index.php?controller=login&action=mostrarRegistro" class="register-link">Regístrar nuevo admin</a></li>
       </ul>
       

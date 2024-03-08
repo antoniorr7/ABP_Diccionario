@@ -10,7 +10,7 @@
 
 <div class="login-container">
     <h2>Formulario de Registro de instalacion</h2>
-    <form action="index.php?controller=login&action=crearUsuario" method="post">
+    <form action="index.php?controller=login&action=crearAdmin" method="post">
     <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required>
     <input type="password" name="contrasena" placeholder="Contraseña" required>
 

@@ -32,7 +32,7 @@ class Controladorclase{
         $this->view = 'aniadirclase';
     }
     public function aniadirClases(){
-        if (isset($_POST['nombreClase']) && !empty($_POST['nombreClase'])) {
+        if (isset($_POST['nombreClase']) && !empty(trim($_POST['nombreClase']))) {
             // Verificar longitud del nombre de la clase
             $nombreClase = $_POST['nombreClase'];
             if (strlen($nombreClase) > 50) {

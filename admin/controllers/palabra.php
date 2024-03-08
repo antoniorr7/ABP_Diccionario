@@ -70,7 +70,7 @@ class Controladorpalabra{
     }
     public function aniadirTraducciones(){
       
-        if($_POST['numTraducciones'] > 0 && !empty($_POST['palabra']) && is_numeric($_POST['numTraducciones'])) {
+        if($_POST['numTraducciones'] > 0 && !empty(trim($_POST['palabra'])) && is_numeric($_POST['numTraducciones'])) {
             $this->view = 'aniadirtraducciones';
             
         // print("<pre>".print_r($_GET,true)."</pre>");
@@ -115,7 +115,7 @@ class Controladorpalabra{
             $_POST['audio'] = NULL;
         }
     // Verificar si la primera traducción está vacía
-    if (empty($_POST['traduccion1'])) {
+    if (empty(trim($_POST['traduccion1'])) ) {
         $this->view = 'aniadirtraducciones';
         return "La primera traducción no puede estar vacía";
     }
@@ -132,7 +132,7 @@ class Controladorpalabra{
        $traduccionesNoVacias[] = $_POST['traduccion1']; // Añadir la primera traducción no vacía
        for ($i = 2; $i <= $numTraducciones; $i++) {
            $traduccionKey = 'traduccion'.$i;
-           if (!empty($_POST[$traduccionKey])) {
+           if (!empty(trim($_POST[$traduccionKey]))) {
                $traduccionesNoVacias[] = $_POST[$traduccionKey];
            }
        }
