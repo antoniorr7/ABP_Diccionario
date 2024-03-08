@@ -4,7 +4,7 @@ require_once 'models/conexion.php';
 class Login extends Conexion {
     public function __construct() { 
         parent::__construct();
-       $this->instalacion();
+        $this->instalacion();
     }
 
     public function iniciarSesion($nombreUsuario, $contrasena) {
@@ -62,10 +62,10 @@ class Login extends Conexion {
         $resultado = $this->conexion->query($query);
     
         if ($resultado && $resultado->fetch_assoc()['total'] > 0) {
-            return; // Ya existen usuarios en la base de datos, no es necesario crear el admin
+            return true; 
         } else {
             // No hay usuarios en la base de datos, creamos el admin
-            $this->crearAdmin(ADMIN, CONTRASENA);
+           return false;
         }
     }
     
@@ -85,4 +85,4 @@ class Login extends Conexion {
         }
     }
 }
-?>
+
