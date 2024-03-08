@@ -11,8 +11,8 @@
 <div class="login-container">
     <h2>Registrate</h2>
     <form action="index.php?controller=login&action=crearUsuario" method="post">
-    <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" required>
-    <input type="password" name="contrasena" placeholder="Contraseña" required>
+    <input type="text" name="nombreUsuario" placeholder="Nombre de usuario" >
+    <input type="password" name="contrasena" placeholder="Contraseña" >
 
         <input type="submit" value="Registrate">
         <?php echo ($retornado ?? '') ? "<span style='color: red;'>".$retornado."</span>" : ''; ?>

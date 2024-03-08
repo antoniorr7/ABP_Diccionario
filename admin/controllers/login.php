@@ -21,10 +21,10 @@ class Controladorlogin
         session_start();
 
         // Verificar si nombre de usuario o contraseña están vacíos
-        if (empty($_POST['nombreUsuario']) || empty($_POST['contrasena'])) {
+        if (empty(trim($_POST['nombreUsuario'])) || empty(trim($_POST['contrasena']))) {
             // Nombre de usuario o contraseña vacíos, redirigir a login
-            header('Location: index.php');
-            return;
+           $this->view = 'login';
+           return ['mensaje' => 'Contraseña o nombre de usuario vacio'];
         }
 
         $nombreUsuario = $_POST['nombreUsuario'];
@@ -81,7 +81,11 @@ class Controladorlogin
                 $this->view = 'registro';
                 return '<p>El nombre de usuario y la contraseña no pueden exceder los 50 caracteres.</p>';
             }
-
+            if (empty(trim($nombre)) || empty(trim($contrasena))) {
+                // Nombre de usuario o contraseña vacíos, redirigir a login
+               $this->view = 'registro';
+               return 'Contraseña o nombre de usuario vacio';
+            }
             $resultado = $this->modeloLogin->crearUsuario($nombre, $contrasena);
 
             if ($resultado == true) {
@@ -103,6 +107,12 @@ class Controladorlogin
                 // Si la longitud excede, mostrar un mensaje de error
                 $this->view = 'registro';
                 return '<p>El nombre de usuario y la contraseña no pueden exceder los 50 caracteres.</p>';
+            }
+
+            if (empty(trim($nombre)) || empty(trim($contrasena))) {
+                // Nombre de usuario o contraseña vacíos, redirigir a login
+               $this->view = 'registro';
+               return 'Contraseña o nombre de usuario vacio';
             }
 
             $resultado = $this->modeloLogin->crearAdmin($nombre, $contrasena);
