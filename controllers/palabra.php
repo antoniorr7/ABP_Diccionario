@@ -10,8 +10,15 @@ class Controladorpalabra{
         $this->modeloPalabra = new Palabra();
     }
   public function listarPalabras(){
+    if (empty(trim($_POST['codigo']))) {
+        $this->view = 'inicio';
+        return 'codigo vacío';
+    }
+    if (strlen($_POST['codigo']) > 5) {
+        $this->view = 'inicio';
+        return 'codigo demasiado largo, 5 caracteres maximo';
+    }
         $this->view = 'palabra';
-        
         return $this->modeloPalabra->listarPalabras($_POST['codigo']);
     }
     public function PDF() {
