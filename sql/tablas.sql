@@ -41,6 +41,8 @@ ADD CONSTRAINT `nombreClase_idUsuario_unique`
 UNIQUE (`nombreClase`, `idUsuario`);
 
 
+ALTER TABLE `clase`
+ADD COLUMN `codigo` varchar(5) NOT NULL UNIQUE;
 
 
 

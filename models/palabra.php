@@ -5,12 +5,12 @@ class Palabra extends Conexion {
     public function __construct() { 
         parent::__construct();
     }
-    public function listarPalabras($idClase){
+    public function listarPalabras($codigo){
         $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase,p.audio
                   FROM palabras p
                   LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
                   LEFT JOIN clase c ON p.idClase = c.id
-                  WHERE p.idClase = $idClase";
+                  WHERE c.codigo = $codigo";
     
         $resultado = $this->conexion->query($query); 
         $palabras = array(); // Inicializamos el arreglo de palabras

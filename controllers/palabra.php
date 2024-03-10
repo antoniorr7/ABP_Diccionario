@@ -12,10 +12,10 @@ class Controladorpalabra{
   public function listarPalabras(){
         $this->view = 'palabra';
         
-        return $this->modeloPalabra->listarPalabras($_GET['idClase']);
+        return $this->modeloPalabra->listarPalabras($_POST['codigo']);
     }
     public function PDF() {
-        $datos = $this->modeloPalabra->listarPalabras($_GET['idClase']);
+        $datos = $this->modeloPalabra->listarPalabras($_GET['codigo']);
         if (empty($datos[0]['significados'])) {
             $this->view= 'error';
             return 'no se puede generar el pdf porque no existen palabras';
