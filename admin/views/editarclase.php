@@ -5,6 +5,8 @@
    <input type="hidden" name="id" value='<?php echo $_GET['id']; ?>'>
     <label for="nombreClase">Nombre de la Clase:</label>
     <input type="text" id="nombreClase" name="nombreClase" value='<?php echo $dato['nombreClase']; ?>' >
+    <label for="nombreClase">Código de la Clase:</label>
+    <input type="text" id="codigo" name="codigo" value='<?php echo $dato['codigo']; ?>' >
     <br>
     <input type="submit" value="Enviar" class="btn">
   </form>

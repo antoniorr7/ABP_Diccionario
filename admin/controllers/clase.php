@@ -32,25 +32,28 @@ class Controladorclase{
         $this->view = 'aniadirclase';
     }
     public function aniadirClases(){
-        if (isset($_POST['nombreClase']) && !empty(trim($_POST['nombreClase']))) {
+        if (isset($_POST['nombreClase']) && !empty(trim($_POST['nombreClase'])) && isset($_POST['codigo']) && !empty(trim($_POST['codigo']))) {
             // Verificar longitud del nombre de la clase
             $nombreClase = $_POST['nombreClase'];
             if (strlen($nombreClase) > 50) {
                 $this->view='error';
                 return "El nombre de la clase no puede tener más de 50 caracteres.";
             }
+            $codigo = $_POST['codigo'];
+            if (strlen($codigo) > 5) {
+                $this->view='error';
+                return "El codigo de la clase no puede tener más de 5 caracteres."; 
+            }
             
-      
-
           
-            if ($this->modeloClase->aniadir($nombreClase)==false) {
+            if ($this->modeloClase->aniadir($nombreClase,$codigo)==false) {
                $this->view='error';
-               return 'clase duplicada';
+               return 'clase o codigo duplicados';
             } 
             header('Location: index.php?action=listarClases&controller=clase');
         } else {
             $this->view='error';
-            return "El nombre de la clase no puede estar vacío.";
+            return "El nombre de la clase o el codigo no pueden estar vacíos.";
         }
         
     }
@@ -78,9 +81,9 @@ class Controladorclase{
         $this->view = 'clase';
         
         // Verificar si se ha enviado el nombre de la clase
-        if(empty(trim($_POST['nombreClase']))) {
+        if(empty(trim($_POST['nombreClase'])) || empty(trim($_POST['codigo']))) {
             $this->view = 'error';
-            return "El nombre de la clase no puede estar vacío.";
+            return "El nombre de la clase o el codigo no pueden estar vacíos.";
         }
         
         // Verificar longitud del nombre de la clase
@@ -89,15 +92,21 @@ class Controladorclase{
             $this->view = 'error';
             return "El nombre de la clase no puede tener más de 50 caracteres.";
         }
+        $codigo = $_POST['codigo'];
+       
+        if (strlen($codigo) > 5) {
+            $this->view='error';
+            return "El codigo de la clase no puede tener más de 5 caracteres."; 
+        }
+        
         
         // Realizar la edición solo si el nombre de la clase no está vacío y no excede la longitud máxima
-        if ($this->modeloClase->editar($_POST['id'], $nombreClase)==false) {
+        if ($this->modeloClase->editar($_POST['id'], $nombreClase, $codigo)==false) {
             $this->view='error';
-            return 'clase ya existente';
+            return 'clase o código ya existente';
         }
  
         header('Location: index.php?action=listarClases&controller=clase');
     }
     
 }
-?>

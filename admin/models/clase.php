@@ -33,7 +33,7 @@ public function listar() {
 }
 
     public function listarClase($id) {
-        $query = "SELECT nombreClase FROM clase where id = $id";
+        $query = "SELECT nombreClase,codigo FROM clase where id = $id";
         $resultado = $this->conexion->query($query); 
        
         if ($resultado === false) {
@@ -51,9 +51,9 @@ public function listar() {
         }
     }
 
-    public function aniadir ($nombre) {
+    public function aniadir ($nombre,$codigo) {
         try {
-            $query = "INSERT INTO clase (nombreClase,idUsuario) VALUES (?,?)";
+            $query = "INSERT INTO clase (nombreClase,codigo,idUsuario) VALUES (?,?,?)";
             $stmt = $this->conexion->prepare($query);
     
             // Verificar si la preparación de la consulta fue exitosa
@@ -62,7 +62,7 @@ public function listar() {
             }
     
             // Vincular parámetros
-            $stmt->bind_param("si", $nombre,$_SESSION['idUsuario']);
+            $stmt->bind_param("ssi", $nombre,$codigo,$_SESSION['idUsuario']);
     
             // Ejecutar la consulta preparada
             $resultado = $stmt->execute();
@@ -95,34 +95,38 @@ public function listar() {
         
     } 
     
-    public function editar($id, $nombre) {
+    public function editar($id, $nombre, $codigo) {
         try {
             // Preparar la consulta con parámetros
-            $query = "UPDATE clase SET nombreClase = ? WHERE id = ?";
+            $query = "UPDATE clase SET nombreClase = ?, codigo = ? WHERE id = ?";
+    
             $stmt = $this->conexion->prepare($query);
     
             // Vincular parámetros
-            $stmt->bind_param("si", $nombre, $id);
+            $stmt->bind_param("ssi", $nombre, $codigo, $id);
     
             // Ejecutar la consulta
             $stmt->execute();
         
-            // Verificar si se ejecutó correctamente
-            if ($stmt->affected_rows > 0) {
-                // Si se modificó al menos una fila, retorna verdadero
-                return true;
-            } else {
-                // Si no se modificó ninguna fila, retorna falso
-                return false;
-            }
-        
+            // Obtener el número de filas afectadas
+            $filas_afectadas = $stmt->affected_rows;
+    
             // Cerrar la sentencia preparada
             $stmt->close();
+        
+            // Verificar si se ejecutó correctamente
+            if ($filas_afectadas != 0) {
+                
+                return false;
+            } else {
+                // Si  se modificó ninguna fila, retorna true
+                return true;
+            }
+            
         } catch (Exception $e) {
-         
             return false;
         }
     }
     
+    
 }
-?>
