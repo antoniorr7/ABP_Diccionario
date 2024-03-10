@@ -99,9 +99,8 @@ class Controladorclase{
             return "El codigo de la clase no puede tener más de 5 caracteres."; 
         }
         
-        
-        // Realizar la edición solo si el nombre de la clase no está vacío y no excede la longitud máxima
-        if ($this->modeloClase->editar($_POST['id'], $nombreClase, $codigo)==false) {
+    
+        if ($this->modeloClase->editar($_POST['id'], $nombreClase, $codigo) === false) {
             $this->view='error';
             return 'clase o código ya existente';
         }

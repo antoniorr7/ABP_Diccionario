@@ -109,21 +109,17 @@ public function listar() {
             $stmt->execute();
         
             // Obtener el número de filas afectadas
-            $filas_afectadas = $stmt->affected_rows;
+        
     
             // Cerrar la sentencia preparada
             $stmt->close();
         
-            // Verificar si se ejecutó correctamente
-            if ($filas_afectadas != 0) {
-                
-                return false;
-            } else {
-                // Si  se modificó ninguna fila, retorna true
-                return true;
-            }
+       
+          
             
         } catch (Exception $e) {
+           if( $e->getCode() == 1062)
+
             return false;
         }
     }
