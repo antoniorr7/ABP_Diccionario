@@ -62,7 +62,7 @@
     <div id="abajo">
         <!-- <a href="index.php?action=aniadirPalabra&controller=palabra&idClase=<?php echo $_GET['idClase']; ?>" id="btnAgregarPalabra" class="btn btn-primary">Añadir Palabra</a> -->
     </div> 
-    <a href="index.php?action=listarClases&controller=clase" class="btn btn-info"><img id="atras" src="img/flecha-izquierda.png" alt=""></a>
+    <a href="index.php" class="btn btn-info"><img id="atras" src="img/flecha-izquierda.png" alt=""></a>
   </div>
 
   <!-- Scripts de Bootstrap y otros -->

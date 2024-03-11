@@ -44,13 +44,13 @@ class Controladorlogin
             // Verificar la contraseña utilizando password_verify
             if (password_verify($contrasena, $datosUsuario['contrasena'])) {
                 $_SESSION['idUsuario'] = $resultado['idUsuario'];
+                $_SESSION['esAdmin'] = $resultado['esAdmin'];
                 header('Location: index.php?controller=clase&action=inicio');
-
             }
         } else {
 
             $this->view = 'login';
-            return ['mensaje' => 'Contraseña Incorrecta'];
+            return ['mensaje' => 'Usuario o contraseña incorrectos'];
 
         }
     }
