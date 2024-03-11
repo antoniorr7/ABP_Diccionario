@@ -7,25 +7,28 @@ class Palabra extends Conexion {
     }
     public function listarPalabras($codigo){
         $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase,p.audio
-                  FROM palabras p
-                  LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
-                  LEFT JOIN clase c ON p.idClase = c.id
-                  WHERE c.codigo = $codigo";
-    
-        $resultado = $this->conexion->query($query); 
-        $palabras = array(); // Inicializamos el arreglo de palabras
-        while ($row = $resultado->fetch_assoc()) {
+        FROM palabras p
+        LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
+        LEFT JOIN clase c ON p.idClase = c.id
+        WHERE c.codigo = ?";
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bind_param("s", $codigo);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+
+            $palabras = array(); // Inicializamos el arreglo de palabras
+            while ($row = $resultado->fetch_assoc()) {
             $palabras[] = $row;
-        }
-        
-        // Comprobar si el arreglo de palabras está vacío
-        if(empty($palabras)) {
-            $mensajeError='<h1>No hay palabras asociada a esta clase</h1>';
+            }
+
+            // Comprobar si el arreglo de palabras está vacío
+            if (empty($palabras)) {
+            $mensajeError = '<h1>No hay palabras asociadas a esta clase</h1>';
             return ['mensaje' => $mensajeError];
-            return $retornado['mensaje']; // Devolver false si no hay palabras
-        } else {
+            } else {
             return $palabras; // Devolver el arreglo de palabras si hay palabras
-        }
+            }
+
     }
     public function obtenerIdClase($idPalabra) {
         $query = "SELECT idClase FROM palabras WHERE idPalabra = ?";
