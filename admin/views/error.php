@@ -3,6 +3,7 @@
 </div>
 
 <?php
+
 // Verificar si idPalabra y idClase están presentes en $_POST
 if(isset($_POST['idPalabra']) && isset($_POST['idClase'])) {
     $idPalabra = $_POST['idPalabra'];

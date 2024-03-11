@@ -53,6 +53,11 @@ public function listar() {
 
     public function aniadir ($nombre,$codigo) {
         try {
+            if (empty(trim($nombre)) || empty(trim($codigo))) {
+                $nombre = null;
+                $codigo = null;
+            }
+    
             $query = "INSERT INTO clase (nombreClase,codigo,idUsuario) VALUES (?,?,?)";
             $stmt = $this->conexion->prepare($query);
     
@@ -70,10 +75,10 @@ public function listar() {
             if ($resultado === false) {
                 throw new Exception('Error al insertar en la base de datos');
             } else {
-                return 'Clase añadida';
+                return true;
             }
-        } catch (Exception $e) {
-            return false;
+        } catch (Exception $errno) {
+            return $errno->getCode();
         }
     }
     
@@ -96,6 +101,11 @@ public function listar() {
     } 
     
     public function editar($id, $nombre, $codigo) {
+        if (empty(trim($nombre)) || empty(trim($codigo))) {
+            $nombre = null;
+            $codigo = null;
+        }
+    
         try {
             // Preparar la consulta con parámetros
             $query = "UPDATE clase SET nombreClase = ?, codigo = ? WHERE id = ?";
@@ -107,22 +117,18 @@ public function listar() {
     
             // Ejecutar la consulta
             $stmt->execute();
-        
-            // Obtener el número de filas afectadas
-        
     
             // Cerrar la sentencia preparada
             $stmt->close();
-        
-       
-          
-            
+    
+            return true; // Indicar que la actualización fue exitosa
+    
         } catch (Exception $e) {
-           if( $e->getCode() == 1062)
-
-            return false;
+            //Return del código de error de la excepción
+            return $this->conexion->errno;
         }
     }
+    
     
     
 }
