@@ -220,7 +220,7 @@ thead th {
   /*clases*/
 .popup {
   position: fixed;
-  top: 50%;
+  top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #f9f9f9;
@@ -228,8 +228,9 @@ thead th {
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-  max-height: 60%;
+  max-height: 75%;
   overflow: auto;
+  width: 45%;
 }
 
 .popup h2 {
@@ -367,18 +368,28 @@ label {
 .campoTexto {
     margin-bottom: 10px;
 }
-
+#formularioTraducciones{
+  width:60%;
+}
+#formularioTraducciones input[type='file']{
+padding: 3%;
+}
 #btnGuardarTraducciones {
     margin-top: 10px;
 }
 /*Editar*/
 #traductor-form {
-  max-width: 400px;
+  max-width:100%;
   margin: 20px auto;
+  width: 100%;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+/*Editar*/
+#traductor-form #audio {
+margin: 2%;
 }
 
 #traductor-form h1 {

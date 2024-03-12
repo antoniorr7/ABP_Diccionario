@@ -8,10 +8,11 @@
           <input type="text" id="palabra" name="palabra" value="<?php echo $data['palabra']; ?>">
         </div>
         <label for="audio">Archivo de Audio:</label>
-        <a id=eliminar href="index.php?action=eliminarAudio&controller=palabra&idPalabra=<?php echo $data['idPalabra']; ?>&idClase=<?php echo $_GET['idClase']; ?>"><img src="../img/borrar.png" alt="eliminar"></a>
+      
 
     
         <?php
+        
           if(isset($data['audio']) && !empty($data['audio'])) {
             $audio_decoded = base64_decode($data['audio']);
             $audio_data_uri = 'data:audio/mpeg;base64,' . base64_encode($audio_decoded);
@@ -21,8 +22,13 @@
                     <source src="' . $audio_data_uri . '" type="audio/mpeg">
                   </audio>
                   </div>';
-                 
+                  echo '<a id="eliminar" href="index.php?action=eliminarAudio&controller=palabra&idPalabra=' . $data['idPalabra'] . '&idClase=' . $_GET['idClase'] . '"><img src="../img/borrar.png" alt="eliminar"></a>';
+                  echo '<br>';
+                  echo '<br>';
+                  echo '<br>';
+                  echo '<label for="audio">Audio si quieres editar el existente:</label>';
         } 
+      
         echo '    <input type="file" id="audio" name="audio" accept="audio/*" >';
         ?>
         

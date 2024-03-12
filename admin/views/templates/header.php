@@ -34,7 +34,7 @@
         <?php
         // Verificar si el usuario es administrador (esAdmin igual a 1)
         if (isset($_SESSION['esAdmin']) && $_SESSION['esAdmin'] == 1) {
-          echo '<li><a href="index.php?controller=login&action=mostrarRegistro" class="register-link">Regístrar nuevo admin</a></li>';
+          echo '<li><a href="index.php?controller=login&action=mostrarRegistro" class="register-link">Regístrar Profesor</a></li>';
         }
         ?>
 
