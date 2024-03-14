@@ -76,13 +76,17 @@ class Login extends Conexion {
         // Encriptar la contraseña antes de almacenarla
         $contrasenia_hash = password_hash($contrasena, PASSWORD_DEFAULT, ['cost' => 12]);
         $query = "INSERT INTO usuarios (nombreUsuario, contrasena, esAdmin) VALUES ('$nombre', '$contrasenia_hash', 0)";
+       
+    try {
         $resultado = $this->conexion->query($query);
-    
+        
         if ($resultado) {
             return true;
-        } else {
-            return false;
         }
+    } catch (Exception $e) {
+        $codigo_error = $e->getCode();
+        return $codigo_error;
     }
+}
 }
 

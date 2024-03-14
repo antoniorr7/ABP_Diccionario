@@ -88,11 +88,10 @@ class Controladorlogin
             }
             $resultado = $this->modeloLogin->crearUsuario($nombre, $contrasena);
 
-            if ($resultado == true) {
+            if ($resultado === true) {
                 $this->view = 'login';
             } else {
-                $this->view = 'registro';
-                return '<p>Error al crear el Usuario.</p>';
+                return $this->obtenerMensajeError($resultado, 'registro');
             }
         }
     }
@@ -139,5 +138,30 @@ class Controladorlogin
             $this->view = 'registroa';
 
         }
+    }
+    public function obtenerMensajeError($codigoError,$vista) {
+        
+        $this->view = $vista; 
+       
+        switch ($codigoError) {
+            case 1048:
+                return "Error al procesar el formulario: No puede haber campos vacíos.";
+                break;
+            case 1406:
+                return "Error al procesar el formulario: Los campos exceden la longitud máxima.";
+                break;
+            case 1062:
+               
+                return "Ya existe un usuario con ese nombre.";
+                break;  
+            default:
+                if (is_numeric($codigoError)) {
+                    return "Error al crear la clase. Código de error: $codigoError";
+                } else { 
+                    return $codigoError;
+                }
+                break;
+        }
+        
     }
 }
