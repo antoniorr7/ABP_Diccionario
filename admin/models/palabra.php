@@ -185,12 +185,14 @@ public function aniadirTraduccionV($idPalabra){
     $stmt->execute();
     $stmt->close();
 }
-public function buscarPalabras( $palabra){
-    $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase,p.audio
-              FROM palabras p
-              LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
-              LEFT JOIN clase c ON p.idClase = c.id
-              WHERE p.palabra LIKE '%$palabra%'";
+public function buscarPalabras($palabra){
+    $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase, p.audio
+    FROM palabras p
+    LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
+    LEFT JOIN clase c ON p.idClase = c.id
+    WHERE p.palabra LIKE '%$palabra%' and c.idUsuario = " . $_SESSION['idUsuario'];
+
+
 
     $resultado = $this->conexion->query($query); 
     $palabras = array(); // Inicializamos el arreglo de palabras

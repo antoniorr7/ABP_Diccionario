@@ -13,6 +13,7 @@
     <div>
       <form action="index.php?action=buscarPalabra&controller=palabra" method="POST">
         <input type="text" id="busqueda" name="busqueda" placeholder="Buscar palabras...">
+      
       </form>
     </div>
     <div>

@@ -600,6 +600,24 @@ body {
 
 
 }
+.audio-container-e {
+
+  display: inline-block;
+  margin-right: 5%;
+  margin-left: 5%;
+height: 100px;
+width: 50%;
+
+}
+.audio-container-e audio{
+
+
+
+  margin-left: 5%;
+height: 100px;
+width: 50%;
+
+}
 audio{
   height: 20px;
   width: 48px;

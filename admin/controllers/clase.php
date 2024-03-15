@@ -35,7 +35,7 @@ class Controladorclase{
         $nombreClase = $_POST['nombreClase'];
         $codigo = $_POST['codigo'];
         $resultado = $this->modeloClase->aniadir($nombreClase,$codigo);
-     echo $resultado;
+
         if($resultado === true){
            header('Location: index.php?action=listarClases&controller=clase');
             exit();
@@ -129,7 +129,7 @@ class Controladorclase{
     public function obtenerMensajeError($codigoError) {
         
         $this->view = 'error'; 
-       echo $codigoError;
+      
         switch ($codigoError) {
             case 1048:
                 return "Error al procesar el formulario: No puede haber campos vacíos.";

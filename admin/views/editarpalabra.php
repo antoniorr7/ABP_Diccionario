@@ -16,7 +16,7 @@
           if(isset($data['audio']) && !empty($data['audio'])) {
             $audio_decoded = base64_decode($data['audio']);
             $audio_data_uri = 'data:audio/mpeg;base64,' . base64_encode($audio_decoded);
-            echo '<div class=audio-container>';
+            echo '<div class=audio-container-e>';
             echo '<audio controls style="width: 100%;">
   
                     <source src="' . $audio_data_uri . '" type="audio/mpeg">
