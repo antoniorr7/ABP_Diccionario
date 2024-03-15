@@ -222,10 +222,24 @@ class Controladorpalabra{
          $this->modeloPalabra->aniadirTraduccion($_GET['idPalabra']);
          header("Location: index.php?controller=palabra&action=rellenarEditar&idPalabra=".$_GET['idPalabra']."&idClase=".$_GET['idClase']);
     }
-    public function buscarPalabra(){
-        $this->view = 'busqueda';
+    public function buscarPalabra()
+{
+    $this->view = 'busqueda';
 
-        return $this->modeloPalabra->buscarPalabras($_POST['busqueda']);
-    }
-    
+    // Verificar si se ha enviado el formulario
+    if (isset($_POST['busqueda']) && isset($_POST['codigo'])) {
+        $busqueda = $_POST['busqueda'];
+        $codigo = $_POST['codigo'];
+
+        // Verificar si el código está vacío o no se ha introducido
+        if (empty($codigo)) {
+            $mensajeError = '<h1>Entra en una clase para buscar palabras</h1>';
+            return ['mensaje' => $mensajeError];
+        }
+
+        // Llamar al método buscarPalabras del modelo
+        return $this->modeloPalabra->buscarPalabras($busqueda, $codigo);
+    } 
+}
+
 }

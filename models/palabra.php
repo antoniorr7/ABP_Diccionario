@@ -16,17 +16,17 @@ class Palabra extends Conexion {
             $stmt->execute();
             $resultado = $stmt->get_result();
 
-            $palabras = array(); // Inicializamos el arreglo de palabras
+            $palabras = array(); // Inicializamos el array de palabras
             while ($row = $resultado->fetch_assoc()) {
             $palabras[] = $row;
             }
 
-            // Comprobar si el arreglo de palabras está vacío
+            // Comprobar si el array de palabras está vacío
             if (empty($palabras)) {
             $mensajeError = '<h1>No hay palabras asociadas a esta clase</h1>';
             return ['mensaje' => $mensajeError];
             } else {
-            return $palabras; // Devolver el arreglo de palabras si hay palabras
+            return $palabras; // Devolver el array de palabras si hay palabras
             }
 
     }
@@ -142,26 +142,47 @@ public function aniadirTraduccionV($idPalabra){
     $stmt->execute();
     $stmt->close();
 }
-public function buscarPalabras( $palabra){
-    $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase,p.audio
+public function buscarPalabras($palabra, $codigo){
+    
+    $palabra = $this->conexion->real_escape_string($palabra);
+
+    // Construct the query using prepared statements
+    $query = "SELECT p.idPalabra, p.palabra, t.idTraduccion, t.significados, c.nombreClase, p.audio
               FROM palabras p
               LEFT JOIN traducciones t ON p.idPalabra = t.idPalabra
               LEFT JOIN clase c ON p.idClase = c.id
-              WHERE p.palabra LIKE '%$palabra%'";
+              WHERE p.palabra LIKE ? AND c.codigo = ?";
 
-    $resultado = $this->conexion->query($query); 
-    $palabras = array(); // Inicializamos el arreglo de palabras
+   
+    $stmt = $this->conexion->prepare($query);
+
+    
+    if (!$stmt) {
+        $mensajeError = '<h1>Error en la preparación de la consulta</h1>';
+        return ['mensaje' => $mensajeError];
+    }
+
+
+    $palabra_like = "%" . $palabra . "%";
+    $stmt->bind_param("ss", $palabra_like, $codigo);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $palabras = array();
+
     while ($row = $resultado->fetch_assoc()) {
         $palabras[] = $row;
     }
-    
-    // Comprobar si el arreglo de palabras está vacío
-    if(empty($palabras)) {
-        $mensajeError='<h1>No hay palabras asociadas a esta clase que coincidan con la búsqueda</h1>';
+
+   
+    $stmt->close();
+
+    if (empty($palabras)) {
+        $mensajeError = '<h1>No hay palabras asociadas a esta clase que coincidan con la búsqueda</h1>';
         return ['mensaje' => $mensajeError];
     } else {
-        return $palabras; // Devolver el arreglo de palabras si hay palabras
+        return $palabras; 
     }
 }
+
 
 }

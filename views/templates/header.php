@@ -15,6 +15,9 @@
     <div>
       <form action="index.php?action=buscarPalabra&controller=palabra" method="POST">
         <input type="text" id="busqueda" name="busqueda" placeholder="Buscar palabras...">
+        <input type="hidden" name="codigo" value="<?php echo isset($_POST['codigo']) ? $_POST['codigo'] : ''; ?>">
+
+        
       </form>
     </div>
   </nav>
